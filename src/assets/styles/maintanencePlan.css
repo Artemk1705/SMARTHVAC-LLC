@@ -1,0 +1,460 @@
+@font-face {
+  font-family: GothamPro-Black;
+  src: url(../../../public/fonts/GothamPro-Black.ttf);
+}
+@font-face {
+  font-family: GothamPro-Bold;
+  src: url(../../../public/fonts/GothamPro-Bold.ttf);
+}
+
+@font-face {
+  font-family: GothamPro-NarrowBold;
+  src: url(../../../public/fonts/GothamProNarrow-Bold.ttf);
+}
+.table_cont,
+.exp_cont {
+  margin-top: 100px;
+}
+.plan_cards_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  width: 100%;
+  padding: 20px 0;
+}
+.plan_title {
+  margin-top: 100px;
+  font-family: GothamPro-Black;
+  letter-spacing: 2px;
+  font-size: 1.65em;
+}
+.plan_title_block {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.plan_title,
+.plan_par_title {
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  padding: 25px;
+}
+.plan_par_title {
+  width: 80vw;
+  margin-top: 0px;
+  font-size: 1.25em;
+}
+.plan_card {
+  width: 20vw;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 0px 10px 5px rgba(160, 157, 157, 0.796);
+  border-radius: 15px;
+  transition: all 0.3s ease-in-out;
+  background-color: #fff;
+  margin-bottom: 20px;
+}
+.plan_card:hover {
+  box-shadow: 0px 0px 20px 10px rgba(129, 75, 120, 0.518);
+}
+.plan_card_title {
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+  padding: 5px 25px;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.plan_card_rec {
+  border-radius: 20px;
+  padding: 0px 7px;
+}
+.bronze {
+  background-color: #e0a66c;
+}
+
+.silver {
+  background-color: #c0c0c0;
+}
+
+.gold {
+  background-color: #efd22b;
+}
+
+.platinum {
+  background-color: #e3e7ed;
+}
+
+.plan_card_content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.plan_card_price {
+  display: flex;
+  flex-direction: row;
+  padding: 50px 20px;
+  font-family: GothamPro-Black;
+  font-size: 3em;
+}
+
+.price_nav {
+  font-size: 0.5em;
+}
+
+.plan_card_list {
+  list-style-type: disc;
+}
+
+.plan_card_price_par {
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.month_price {
+  text-decoration: underline;
+  font-family: GothamPro-Bold;
+  padding: 0 3px;
+}
+
+.plan_card_features {
+  padding: 10px 15px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease-in-out;
+}
+
+.plan_card_features.expanded {
+  max-height: 500px;
+}
+.plan_card_button_container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.plan_card_apply {
+  border: unset;
+  box-shadow: 0px 0px 10px rgba(218, 217, 219, 0.395);
+  background-color: rgba(121, 31, 64, 0.961);
+  height: 40px;
+  color: white;
+  font-family: GothamPro-Black;
+  font-size: 1.15em;
+  padding: 5px 60px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.5s;
+  width: 150px;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.plan_card_apply:hover {
+  box-shadow: none;
+  transform: translate(2px, 2px);
+}
+.toggle_button {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 10px 20px;
+  background-image: linear-gradient(
+    0deg,
+    rgba(123, 30, 52, 0.743),
+    rgb(76, 44, 128)
+  );
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s ease;
+  border-bottom-left-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.toggle_button:hover {
+  background-image: linear-gradient(
+    0deg,
+    rgba(123, 30, 52, 0.75),
+    rgba(76, 44, 128, 0.75)
+  );
+}
+.explanation_title_quest {
+  margin-bottom: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.explanation_block {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.explanation_content {
+  width: 75vw;
+  border-top: 1.5px solid gray;
+  border-bottom: 1.5px solid gray;
+  padding: 30px;
+  margin: 15px 0;
+}
+.explanation_title {
+  font-size: 1.2em;
+  font-family: GothamPro-NarrowBold;
+}
+.explanation_paragraph {
+  padding-top: 10px;
+}
+.explanation_title_block {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+.explanation_arrow_block {
+  transform: rotate(90deg);
+  transition: 0.5s;
+}
+.explanation_arrow_block.active {
+  transform: rotate(-90deg);
+}
+.explanation_arrow_1 {
+  position: relative;
+  width: 15px;
+  rotate: -45deg;
+  border: 1.5px solid black;
+}
+.explanation_arrow_2 {
+  position: relative;
+  top: 7.5px;
+  width: 15px;
+  rotate: 45deg;
+  border: 1.5px solid black;
+}
+.table_container {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px 0;
+}
+.table_cont {
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
+.maintenance_table {
+  width: 100vw;
+  border-collapse: separate;
+  border-spacing: 4.25vw 15px;
+}
+.maintenance_table td {
+  padding: 20px;
+  text-align: center;
+}
+.header-row {
+  font-family: GothamPro-Bold;
+  font-size: 1.25em;
+}
+.row-even {
+  background-color: #c8c1c11c;
+}
+
+.row-odd {
+  background-color: #fff;
+}
+
+.cell-bronze,
+.cell-silver,
+.cell-gold,
+.cell-platinum {
+  box-shadow: 0px 0px 5px 2.5px rgba(160, 157, 157, 0.648);
+  text-align: center;
+  width: 20vw;
+  border-radius: 15px;
+}
+
+.form_modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 0;
+  animation: fadeIn 0.3s forwards;
+}
+.form_plan {
+  width: 45vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.form_block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: white;
+  width: 50vw;
+  height: 100%;
+  padding: 20px;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.5);
+  transform: translateX(100%);
+  animation: slideIn 0.3s forwards;
+}
+
+.block_content {
+  margin-top: 40px;
+}
+
+.req_title {
+  font-family: GothamPro-Bold;
+  font-size: 1.45em;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 150px;
+}
+.form_plan input:-webkit-autofill:hover,
+.form_plan input:-webkit-autofill:focus,
+.form_plan input:-webkit-autofill {
+  -webkit-text-fill-color: rgb(0, 0, 0);
+}
+.plan_form_input {
+  height: 40px;
+  width: 90%;
+  font-size: 1.15em;
+  border-radius: 10px;
+  border: unset;
+  margin: 10px 0;
+  padding: 2.5px 20px;
+  box-shadow: inset 0 0 10px rgba(67, 66, 66, 0.404);
+}
+
+form button {
+  box-shadow: 0px 0px 10px rgba(218, 217, 219, 0.395);
+  background-color: rgba(121, 31, 64, 0.961);
+  border: unset;
+  height: 40px;
+  color: white;
+  font-family: GothamPro-Black;
+  font-size: 1.3em;
+  padding: 5px 50px;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: 0.5s;
+  width: 150px;
+  white-space: nowrap;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+.table_plan_container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}
+.column {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+}
+.row-even,
+.row-odd,
+.header-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 5px 2.5px rgba(160, 157, 157, 0.648);
+  text-align: center;
+  width: 19.6vw;
+  height: 5vh;
+  border-radius: 15px;
+  margin: 0.5vw 2vw;
+  padding: 5px;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+@media screen and (max-width: 1390px) {
+  .plan_card {
+    width: 24vw;
+  }
+  .plan_card_price {
+    font-size: 2.5em;
+  }
+  .plan_container {
+    margin-top: 100px;
+  }
+  .row-even,
+  .row-odd,
+  .header-row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 19.6vw;
+    height: 11vh;
+  }
+}
+@media screen and (max-width: 1000px) {
+  .plan_cards_container {
+    flex-direction: column;
+    align-items: center;
+  }
+  .plan_card {
+    width: 50vw;
+  }
+}
+@media screen and (max-width: 850px) {
+  .row-even,
+  .row-odd,
+  .header-row {
+    display: none;
+  }
+}
+@media screen and (max-width: 450px) {
+  .plan_card {
+    width: 80vw;
+  }
+  .form_block {
+    width: 80vw;
+  }
+  .form_plan {
+    width: 100%;
+  }
+  .req_title {
+    margin-bottom: 50px;
+  }
+}

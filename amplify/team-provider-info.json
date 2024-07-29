@@ -1,0 +1,20 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-smarthvacllc-dev-40a87-authRole",
+      "UnauthRoleArn": "arn:aws:iam::246735432813:role/amplify-smarthvacllc-dev-40a87-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::246735432813:role/amplify-smarthvacllc-dev-40a87-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-smarthvacllc-dev-40a87-deployment",
+      "UnauthRoleName": "amplify-smarthvacllc-dev-40a87-unauthRole",
+      "StackName": "amplify-smarthvacllc-dev-40a87",
+      "StackId": "arn:aws:cloudformation:us-east-1:246735432813:stack/amplify-smarthvacllc-dev-40a87/6b487820-4e01-11ef-b001-12b571bfd60b",
+      "AmplifyAppId": "d3grshusli1eaf"
+    },
+    "categories": {
+      "function": {
+        "DiscountFunction": {}
+      }
+    }
+  }
+}
