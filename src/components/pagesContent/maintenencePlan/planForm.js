@@ -34,8 +34,8 @@ function PlanForm({ title, onClose }) {
       console.log("Submitting form data:", { ...formData, title });
 
       const restOperation = post({
-        apiName: "Subscription",
-        path: "/subs",
+        apiName: "Subscribe",
+        path: "/subscribe",
         options: {
           body: { ...formData, title },
           headers: {

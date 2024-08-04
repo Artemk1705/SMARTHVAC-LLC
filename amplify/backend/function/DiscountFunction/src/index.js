@@ -1,15 +1,11 @@
-const awsServerlessExpress = require('aws-serverless-express');
-const app = require('./app');
+const serverless = require("serverless-http");
+const app = require("./discount/discount-server");
+app.use((req, res, next) => {
+  console.log(`Received request for URL: ${req.url}`);
+  console.log(`Request body: ${JSON.stringify(req.body)}`);
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "*");
+  next();
+});
 
-/**
- * @type {import('http').Server}
- */
-const server = awsServerlessExpress.createServer(app);
-
-/**
- * @type {import('@types/aws-lambda').APIGatewayProxyHandler}
- */
-exports.handler = (event, context) => {
-  console.log(`EVENT: ${JSON.stringify(event)}`);
-  return awsServerlessExpress.proxy(server, event, context, 'PROMISE').promise;
-};
+exports.handler = serverless(app);

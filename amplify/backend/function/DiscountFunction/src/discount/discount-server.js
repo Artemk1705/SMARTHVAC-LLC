@@ -5,18 +5,21 @@ const bodyParser = require("body-parser");
 const serverless = require("serverless-http");
 
 const app = express();
-
+const hostReg = process.env.SMTP_REG;
+const smptPort = process.env.SMTP_PORT;
+const smtpUser = process.env.SMTP_USER;
+const smtpPass = process.env.SMTP_PASS;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const transporter = nodemailer.createTransport({
-  host: "email-smtp.us-east-1.amazonaws.com",
-  port: 587,
+  host: hostReg,
+  port: smptPort,
   secure: false,
   auth: {
-    user: "AKIATS4UT5RW4WTKT7ON",
-    pass: "BEQc91dkWshh8tEeRpua0T1Kt+mQ1iCSghnjgfZ33+7P",
+    user: smtpUser,
+    pass: smtpPass,
   },
 });
 
@@ -51,6 +54,7 @@ app.post("/discount", (req, res) => {
     `,
   };
 
+  console.log("Attempting to send user notification email...");
   transporter.sendMail(mailToUser, (error, info) => {
     if (error) {
       console.error("Error sending user notification:", error.message);
@@ -60,15 +64,16 @@ app.post("/discount", (req, res) => {
       });
     } else {
       console.log("User notification sent successfully:", info.response);
+      console.log("Attempting to send admin notification email...");
       transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-          console.error("Error sending email:", error.message);
+          console.error("Error sending admin email:", error.message);
           res.status(500).json({
             success: false,
             error: "Error sending email: " + error.message,
           });
         } else {
-          console.log("Email sent successfully to admin:", info.response);
+          console.log("Admin email sent successfully:", info.response);
           res.status(200).json({
             success: true,
             message: "Service booking submitted successfully",

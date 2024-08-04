@@ -165,8 +165,8 @@ function EmploymentForm() {
       console.log("Submitting form data:", data);
 
       const result = await post({
-        apiName: "Careers",
-        path: "/careers",
+        apiName: "Career",
+        path: "/career",
         options: {
           body: data,
           headers: {

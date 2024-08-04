@@ -1,19 +1,35 @@
 {
   "dev": {
     "awscloudformation": {
-      "AuthRoleName": "amplify-smarthvacllc-dev-40a87-authRole",
-      "UnauthRoleArn": "arn:aws:iam::246735432813:role/amplify-smarthvacllc-dev-40a87-unauthRole",
-      "AuthRoleArn": "arn:aws:iam::246735432813:role/amplify-smarthvacllc-dev-40a87-authRole",
+      "AuthRoleName": "amplify-smarthvacllc-dev-ce077-authRole",
+      "UnauthRoleArn": "arn:aws:iam::611655869456:role/amplify-smarthvacllc-dev-ce077-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::611655869456:role/amplify-smarthvacllc-dev-ce077-authRole",
       "Region": "us-east-1",
-      "DeploymentBucketName": "amplify-smarthvacllc-dev-40a87-deployment",
-      "UnauthRoleName": "amplify-smarthvacllc-dev-40a87-unauthRole",
-      "StackName": "amplify-smarthvacllc-dev-40a87",
-      "StackId": "arn:aws:cloudformation:us-east-1:246735432813:stack/amplify-smarthvacllc-dev-40a87/6b487820-4e01-11ef-b001-12b571bfd60b",
-      "AmplifyAppId": "d3grshusli1eaf"
+      "DeploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
+      "UnauthRoleName": "amplify-smarthvacllc-dev-ce077-unauthRole",
+      "StackName": "amplify-smarthvacllc-dev-ce077",
+      "StackId": "arn:aws:cloudformation:us-east-1:611655869456:stack/amplify-smarthvacllc-dev-ce077/33681270-5140-11ef-9e0c-0efff1173fbf",
+      "AmplifyAppId": "d21ypruehhhio3"
     },
     "categories": {
       "function": {
-        "DiscountFunction": {}
+        "DiscountFunction": {
+          "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
+          "s3Key": "amplify-builds/DiscountFunction-70644d2b76376f636867-build.zip"
+        },
+        "SubscribeFunction": {
+          "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
+          "s3Key": "amplify-builds/SubscribeFunction-2f587847585236367350-build.zip"
+        },
+        "CareerFunction": {
+          "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
+          "s3Key": "amplify-builds/CareerFunction-55346775445947485477-build.zip"
+        }
+      },
+      "api": {
+        "Discount": {},
+        "Subscribe": {},
+        "Career": {}
       }
     }
   }

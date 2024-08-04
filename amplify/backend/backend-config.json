@@ -1,5 +1,19 @@
 {
   "api": {
+    "Career": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "CareerFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "Discount": {
       "dependsOn": [
         {
@@ -13,13 +27,87 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "Subscribe": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "SubscribeFunction"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "function": {
+    "CareerFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
     "DiscountFunction": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
+    },
+    "SubscribeFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    }
+  },
+  "parameters": {
+    "AMPLIFY_function_CareerFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "CareerFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_CareerFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "CareerFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DiscountFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DiscountFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_DiscountFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "DiscountFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_SubscribeFunction_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "SubscribeFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_SubscribeFunction_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "SubscribeFunction"
+        }
+      ]
     }
   }
 }
