@@ -152,6 +152,7 @@
   .footer_block {
     flex-direction: column-reverse;
     padding: 50px 0;
+    background: radial-gradient(circle at 20% -30%, #cb000a 20%, #091f57 80%);
   }
   .footer_icons {
     width: 100vw;

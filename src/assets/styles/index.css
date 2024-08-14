@@ -1397,6 +1397,9 @@ code {
   }
 }
 @media screen and (max-width: 450px) {
+  .dis_form_container {
+    background: radial-gradient(circle at 75% 120%, #cb000a 20%, #091f57 80%);
+  }
   .dis_quest_block {
     width: 100vw;
     white-space: nowrap;
@@ -1443,9 +1446,11 @@ code {
     background: radial-gradient(circle at 75% 140%, #cb000a 20%, #091f57 80%);
   }
   .Head_text {
+    overflow: hidden;
+    margin-left: 3%;
     margin-top: 10px;
     margin-bottom: 150px;
-    font-size: 0.95em;
+    font-size: 0.9em;
     width: 100vw;
   }
   .photo {
