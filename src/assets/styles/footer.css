@@ -4,13 +4,13 @@
 }
 .footer_block {
   backdrop-filter: blur(10px);
-  background-image: linear-gradient(180deg, rgb(123, 30, 51), rgb(76, 44, 128));
+  background: radial-gradient(circle at 20% -100%, #cb000a 20%, #091f57 80%);
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 3vh 5vw;
   width: 90vw;
-  margin-top: 20vh;
+  margin-top: 0vh;
 }
 .footer_page_navigation_title,
 .footer_icons_block_title {

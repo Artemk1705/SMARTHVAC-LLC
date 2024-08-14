@@ -83,6 +83,7 @@ function Main() {
           </div>
         </div>
         <div>
+          <h3 className="partners_text">OUR PARTNERS</h3>
           <Suspense fallback={<div>Loading...</div>}>
             <PartnersBlock />
           </Suspense>

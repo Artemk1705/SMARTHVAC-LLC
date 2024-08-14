@@ -41,6 +41,10 @@ h3,
 h4 {
   font-family: GothamPro-Bold;
 }
+p,
+li {
+  font-family: GothamProMedium;
+}
 .card_par,
 .review,
 .dis_p,
@@ -50,8 +54,7 @@ h4 {
 }
 .button_get_sch {
   height: 75px;
-  background-size: 150%;
-  background-image: linear-gradient(90deg, rgb(123, 30, 51), rgb(76, 44, 128));
+  background-color: #2b2ddf;
   white-space: nowrap;
   margin-left: 50px;
   margin-top: 35px;
@@ -67,15 +70,15 @@ h4 {
 .button_Inp,
 .finance_button {
   font-family: GothamPro-Black;
-  box-shadow: 0px 0px 10px rgba(218, 217, 219, 0.395);
-  background-color: rgba(121, 31, 64, 0.961);
+
+  background-color: #2b2ddf;
   border: unset;
   padding: 20px 10px;
   width: 100%;
   max-width: 220px;
   font-size: 1.35em;
   color: white;
-  border-radius: 15px;
+  border-radius: 2px;
   cursor: pointer;
   transition: 0.3s;
   white-space: nowrap;
@@ -90,14 +93,18 @@ h4 {
 }
 .round {
   margin-top: 15%;
-  background-color: rgb(123, 30, 51);
+  background-color: rgb(255, 255, 255);
   border-radius: 100%;
+  border: 3px solid #cb000a;
   width: 100px;
   height: 100px;
   z-index: 1;
   padding: 20px;
 }
-
+.round img {
+  filter: invert(30%) sepia(100%) saturate(10000%) hue-rotate(0deg)
+    brightness(0.65);
+}
 .photo_Emerg {
   width: 100%;
   z-index: 2;
@@ -144,13 +151,11 @@ h4 {
   align-items: center;
   margin: 35px 0 40px 7vw;
   margin-left: calc(var(--index) * 5.5);
-  box-shadow: 0px 0px 10px 5px rgba(160, 157, 157, 0.796);
-  border-radius: 20px;
+  background-color: rgba(208, 192, 196, 0.201);
   transition: 0.3s;
 }
 
 .card:hover {
-  box-shadow: 0px 0px 20px 10px rgba(129, 75, 120, 0.518);
 }
 .card_container {
   text-align: center;
@@ -180,7 +185,7 @@ h4 {
 .swiper-button-next,
 .swiper-button-prev {
   --swiper-theme-color: rgb(145, 144, 144);
-  --swiper-navigation-size: 35px;
+  --swiper-navigation-size: 50px;
   padding: 15px 15px;
   margin: 0 20px;
   transform: translateY(-10%);
@@ -264,6 +269,7 @@ code {
   flex-direction: row;
   margin-top: -5px;
   width: 100vw;
+  margin-bottom: 150px;
 }
 .Head_text {
   font-size: calc(var(--index) * 1.5);
@@ -292,7 +298,7 @@ code {
   overflow: hidden;
 }
 .main_text {
-  background-image: linear-gradient(0deg, rgb(123, 30, 51), rgb(76, 44, 128));
+  background: radial-gradient(circle at 80% 200%, #cb000a 20%, #091f57 80%);
   width: 100vw;
   height: 30vh;
   text-align: start;
@@ -368,31 +374,25 @@ code {
   color: white;
 }
 
-@keyframes gradient {
-  0% {
-    background-position: 0% 50%;
-    box-shadow: 0px 0px 15px 7.5px rgba(55, 49, 120, 0.796);
-  }
-  50% {
-    background-position: 100% 50%;
-    box-shadow: 0px 0px 10px 5px rgba(118, 42, 67, 0.796);
-  }
-  100% {
-    background-position: 0% 50%;
-    box-shadow: 0px 0px 15px 7.5px rgba(55, 49, 120, 0.796);
-  }
-}
-
 .services_content {
-  padding-top: 50px;
+  padding-top: 0px;
 }
 .serv_text {
   text-align: center;
-  margin-top: 40px;
-  margin-bottom: 50px;
+  margin-top: 0px;
+  margin-bottom: 100px;
   font-size: calc(var(--index) * 4);
   cursor: default;
   color: #97979742;
+  font-family: GothamPro-black;
+}
+.partners_text {
+  text-align: center;
+  margin-top: 0px;
+  margin-bottom: 50px;
+  font-size: calc(var(--index) * 4);
+  cursor: default;
+  color: #091f57;
   font-family: GothamPro-black;
 }
 .full_reviews a {
@@ -520,7 +520,7 @@ code {
   opacity: 0;
 }
 .full_reviews {
-  margin: 100px 0px;
+  margin: 0px 0px 20px 0;
   padding: 25px 0px;
   width: 100vw;
   min-height: 550px;
@@ -530,7 +530,7 @@ code {
   display: flex;
   justify-content: end;
   align-items: center;
-  background-image: url(../images/reviews-back.jpg);
+  background-image: url(../images/block-reviews.png);
   background-size: 95vw 20vw;
   background-repeat: no-repeat;
   background-position: 5vw 50%;
@@ -582,9 +582,9 @@ code {
   align-items: center;
   justify-content: center;
   flex-direction: column;
-  padding: 25px;
-  margin: 100px 0 200px 0;
-  background-image: linear-gradient(0deg, rgb(123, 30, 51), rgb(76, 44, 128));
+  padding: 50px 0;
+  margin: 0 0 150px 0;
+  background: radial-gradient(circle at 80% 200%, #cb000a 20%, #091f57 80%);
 }
 .dis_quest_block {
   display: flex;
@@ -634,9 +634,6 @@ code {
   list-style-type: disc;
   list-style-position: inside;
   padding: 20px;
-}
-.dis_form_container {
-  position: relative;
 }
 .disclamer_block {
   display: flex;
@@ -739,8 +736,8 @@ code {
   cursor: pointer;
 }
 .partners_container {
-  margin: 100px 0 200px 0;
   padding: 25px 0;
+  margin: 0 0 100px 0;
 }
 .upper_block,
 .lower_block {
@@ -764,7 +761,7 @@ code {
   text-align: center;
   justify-content: center;
   padding: 0 40px;
-  margin: 50px 0;
+  margin: 0 0 50px 0;
   font-family: GothamPro-black;
   letter-spacing: 2px;
   font-size: 1.8em;
@@ -773,7 +770,7 @@ code {
   margin: 100px 0 200px 0;
 }
 .finance_container {
-  margin: 100px 0;
+  margin: 100px 0 150px 0;
   padding: 25px 0;
   display: flex;
   flex-direction: row;
@@ -797,6 +794,7 @@ code {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  text-align: justify;
 }
 .finance_p {
   width: 30vw;
@@ -1374,6 +1372,7 @@ code {
   }
   .main_block {
     width: 100vw;
+    margin-top: 50px;
   }
   .footer_block {
     backdrop-filter: blur(10px);
@@ -1435,6 +1434,7 @@ code {
   .main_text {
     flex-direction: column;
     height: 100%;
+    background: radial-gradient(circle at 75% 140%, #cb000a 20%, #091f57 80%);
   }
   .Head_text {
     margin-top: 10px;
@@ -1454,6 +1454,8 @@ code {
     background-repeat: no-repeat;
     background-position: 2.5vw 50%;
     overflow: hidden;
+    background-image: url(../images/reviws-mob.png);
+    background-size: 100vw 75%;
   }
   .review {
     width: 60vw;
@@ -1467,6 +1469,7 @@ code {
     color: rgb(255, 255, 255);
     font-size: 1.2em;
     line-height: 23px;
+    margin-left: 55px;
   }
   .button_get_sch {
     margin-left: 25vw;
@@ -1515,6 +1518,7 @@ code {
   }
   .synchony_logo {
     width: 70%;
+    margin-bottom: 50px;
   }
   .finance_container {
     margin-top: 50px;

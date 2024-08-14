@@ -8,6 +8,7 @@ import EnergTrust from "../../../assets/images/LogosPartners/energTrustLogo.png"
 export default function PartnersBlock() {
   return (
     <div className="partners_container">
+    
       <div className="logos_block">
         <div className="upper_block">
           <img src={York} className="logo_partners" alt="York" />

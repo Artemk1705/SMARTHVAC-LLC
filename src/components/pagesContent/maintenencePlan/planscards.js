@@ -68,7 +68,7 @@ export default function PlanCard() {
     },
   ];
   return (
-    <div className="plan_cards_container">
+    <div className="plan_cards_container_main">
       {" "}
       <div className="plan_cards_container">
         {plans.map((plan, index) => (
