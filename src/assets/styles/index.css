@@ -1372,7 +1372,7 @@ code {
   }
   .main_block {
     width: 100vw;
-    margin-top: 50px;
+    margin-top: 30px;
   }
   .footer_block {
     backdrop-filter: blur(10px);
@@ -1397,6 +1397,12 @@ code {
   }
 }
 @media screen and (max-width: 450px) {
+  .dis_quest_block {
+    width: 100vw;
+    white-space: nowrap;
+  }
+  .quest_img {
+  }
   .round {
     width: 85px;
     height: 85px;
@@ -1473,7 +1479,7 @@ code {
   }
   .button_get_sch {
     margin-left: 25vw;
-    margin-top: -5vh;
+    margin-top: 0vh;
     margin-bottom: 13.5%;
   }
   .logo_photo {
@@ -1487,7 +1493,7 @@ code {
   .card {
     width: calc(var(--index) * 38);
     height: calc(var(--index) * 60);
-    margin-left: calc(var(--index) * 4.25);
+    margin-left: calc(var(--index) * 4.45);
   }
   .card_container {
     margin-bottom: 10vh;
@@ -1560,6 +1566,10 @@ code {
   .burger-lines {
     left: 10px;
     top: 3px;
+  }
+  .swiper-button-next,
+  .swiper-button-prev {
+    margin-left: 5px;
   }
 }
 @media screen and (max-width: 430px) {
