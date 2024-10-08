@@ -19,11 +19,11 @@
         },
         "SubscribeFunction": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/SubscribeFunction-2f587847585236367350-build.zip"
+          "s3Key": "amplify-builds/SubscribeFunction-677663504f536b586138-build.zip"
         },
         "CareerFunction": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/CareerFunction-55346775445947485477-build.zip"
+          "s3Key": "amplify-builds/CareerFunction-4467537534485a483044-build.zip"
         }
       },
       "api": {

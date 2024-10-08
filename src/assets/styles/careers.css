@@ -254,6 +254,7 @@ input:-webkit-autofill:active {
   list-style: circle;
   text-align: start;
   cursor: default;
+  margin-bottom: 50px;
 }
 .title_apply a {
   text-decoration: none;
@@ -424,6 +425,16 @@ input:-webkit-autofill:active {
   border: wheat 1px solid;
   padding: 50px 0px;
   margin-left: 10%;
+}
+
+.position_choice {
+  display: flex;
+  justify-content: space-evenly;
+  width: 80%;
+  border: wheat 1px solid;
+  padding: 50px 0px;
+  margin-left: 10%;
+  margin-bottom: 75px;
 }
 .exp_block {
   width: 60%;
@@ -612,7 +623,11 @@ input:-webkit-autofill:active {
   text-decoration: none;
 }
 .modal-content {
-  background-color: rgba(73, 34, 136, 0.557);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(32, 32, 60, 0.87);
   color: white;
   padding: 20px;
   border-radius: 5px;
@@ -622,17 +637,20 @@ input:-webkit-autofill:active {
   backdrop-filter: blur(5px);
   box-shadow: 0 0 5px rgba(202, 138, 202, 0.557);
 }
+.button_back a {
+  color: aliceblue;
+}
 .button_back {
+  display: flex;
+  justify-content: center;
   margin-top: 2%;
-  width: 150px;
-  border-radius: 5px;
+  width: 75px;
+  border-radius: 2px;
   height: unset;
   color: aliceblue;
   text-align: center;
   transition: all 0.5s;
-  border: 2px solid rgba(97, 64, 162, 0.961);
-  box-shadow: 0px 0px 6px rgba(218, 217, 219, 0.395);
-  background-color: rgba(139, 37, 74, 0.961);
+  background-color: #2b2ddf;
   font-size: 20px;
   font-weight: bolder;
   letter-spacing: 1px;
@@ -641,7 +659,6 @@ input:-webkit-autofill:active {
   cursor: pointer;
 }
 .button_back:hover {
-  border: 2px solid rgba(116, 89, 170, 0.961);
   box-shadow: none;
   transform: translate(-2px, -2px);
   cursor: pointer;

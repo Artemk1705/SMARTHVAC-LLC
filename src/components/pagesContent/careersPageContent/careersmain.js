@@ -1,4 +1,6 @@
 import Posserv from "./positions/posServ";
+import Posacc from "./positions/posAcc";
+import Posinst from "./positions/posInst";
 
 function Careersmain() {
   return (
@@ -18,6 +20,8 @@ function Careersmain() {
         <div className="positions">
           <div className="positions_first_block">
             <Posserv />
+            <Posacc />
+            <Posinst />
           </div>
           <div className="positions_second_block"></div>
         </div>

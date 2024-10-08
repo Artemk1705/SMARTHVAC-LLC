@@ -38,12 +38,12 @@ function Posinst() {
   };
 
   return (
-    <div className="air_pos">
+    <div className="serv_pos">
       <div className="position">
-        <h4 className="position_title">HVAC installer</h4>
+        <h4 className="position_title">HVAC Installer</h4>
         <p className="position_p">
-          Tasked with the installation and proper connection of air conditioning
-          units.
+          We are searhcing a skilled and experienced HVAC Installer to join our
+          team.
         </p>
         <button onClick={handleDivClick} className="info-button">
           MORE
@@ -54,46 +54,69 @@ function Posinst() {
           <div onClick={handleCloseClick} className="close-button"></div>
           <div className="block-content">
             <div>
-              <h4 className="full_header">Endless possibilities</h4>
+              <div className="title_apply">
+                <h4 className="full_header">HVAC Installer</h4>
+                <Link to="/careerforms/Servform">
+                  <div className="apply_button">APPLY</div>
+                </Link>
+              </div>
               <p className="full_pa">
-                I am excited to introduce you to ChatGPT - an innovative
-                artificial intelligence technology that can help you find
-                answers to all your questions. Whether you need information on
-                the latest news, travel tips, or even just some entertaining
-                jokes, ChatGPT is always ready to assist.
+                We are seeking a skilled and experienced HVAC Installer to join
+                our team. As an HVAC Installer, you will be responsible for
+                installing, repairing, and maintaining heating, ventilation, and
+                air conditioning systems in residential and commercial settings.
+                This is a full-time position with competitive pay and benefits.
+              </p>
+              <h4 className="req_title">Requirements and Responsibility</h4>
+              <ul className="req_list">
+                <li>
+                  Proven 1 year experience as an HVAC Installer or similar role.
+                </li>
+                <li>
+                  Strong knowledge of refrigeration principles and practices
+                </li>
+                <li>Proficient in equipment repair and maintenance.</li>
+                <li>
+                  Familiarity with air conditioning systems and components.
+                </li>
+                <li>
+                  Excellent mechanical knowledge and troubleshooting skills.
+                </li>
+                <li>Ability to read blueprints and technical drawings.</li>
+                <li>
+                  Experience in field service or a related field is a plus.
+                </li>
+                <li>Install/reinstall furnaces/air handlers.</li>
+                <li>Evacuate, charge any AC or Heat pump.</li>
+                <li>
+                  braze, experience build any fitting on site with flat stock.
+                </li>
+                <li>Must be able to pass drug & background check.</li>
+              </ul>
+
+              <h4 className="req_title">License/Certification</h4>
+              <ul className="req_list">
+                <li>Driver’s License (Required).</li>
+                <li>HVAC technician</li>
+                <li>Certifications for Journey.</li>
+                <li>Low Voltage.</li>
+                <li>EPA 608.</li>
+                <li>CFC card.</li>
+              </ul>
+              <p className="full_pa">
+                Salary: Compensation is negotiable and will be discussed during
+                the interview process.
+              </p>
+              <p className="full_pa">Rate + bonus.</p>
+              <p className="full_pa">
+                We host company sponsored events for the employees and their
+                families. Company provides I-Pads for field Staff.
               </p>
               <p className="full_pa">
-                Paragraph 1: ChatGPT is not just an ordinary chatbot. It is
-                based on cutting-edge technology developed by the OpenAI team
-                and possesses a vast knowledge base collected from various
-                sources. This enables it to provide you with accurate and
-                high-quality answers to a wide range of questions.
+                Responses without resume will not be considered.
               </p>
-              <p className="full_pa">
-                Paragraph 2: But what makes ChatGPT truly remarkable is its
-                ability to learn. You can ask questions sequentially, edit them,
-                and receive new, more precise answers. ChatGPT adapts to your
-                needs and improves its responses based on your feedback. This
-                means that with each interaction, it becomes more accurate and
-                helpful.
-              </p>
-              <p className="full_pa">
-                {" "}
-                Paragraph 3: ChatGPT can also accomplish incredible things when
-                used with a creative approach. It can assist you in generating
-                unique texts, developing creative ideas, or even aiding in
-                writing articles and news for your website. Just ask questions
-                and share your ideas, and ChatGPT will work alongside you to
-                achieve astonishing results.
-              </p>
-              <p className="full_pa">
-                {" "}
-                Conclusion: Don't miss out on the benefits of using ChatGPT on
-                our website. It is ready to help you with any questions and
-                tasks, offering flexibility and the ability to improve with each
-                interaction. Try ChatGPT today and discover a world of new
-                possibilities and incredible outcomes.
-              </p>
+              <p className="full_pa">We look forward to hearing from you!</p>
+              <div className="container_button"></div>
             </div>
           </div>
         </div>

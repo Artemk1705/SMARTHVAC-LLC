@@ -35,6 +35,7 @@ const customStyles = {
 
 function EmploymentForm() {
   const [formData, setFormData] = useState({
+    position: "",
     firstName: "",
     lastName: "",
     email: "",
@@ -218,6 +219,24 @@ function EmploymentForm() {
       className="employment-form"
       encType="multipart/form-data"
     >
+      <h2 className="title_form">Select Job Position</h2>
+      <div className="position_choice">
+        <div className="last_work_place">
+          <select
+            id="position"
+            name="position"
+            onChange={handleChange}
+            required
+          >
+            <option value="">Select Position</option>
+            <option value="HVAC Service Technician">
+              HVAC Service Technician
+            </option>
+            <option value="Office Assistant">Office Assistant</option>
+            <option value="HVAC Installer">HVAC Installer</option>
+          </select>
+        </div>
+      </div>
       <h2 className="title_form">Contact information</h2>
 
       <div className="name_block">
@@ -545,12 +564,12 @@ function EmploymentForm() {
                   We will contact you as soon as we process your data.
                 </p>
                 <Link to="/">
-                  <button
+                  <div
                     className="button_back"
                     onClick={() => setModalOpen(false)}
                   >
                     Back
-                  </button>
+                  </div>
                 </Link>
               </div>
             </div>

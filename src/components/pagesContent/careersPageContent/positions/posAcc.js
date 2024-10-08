@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 function Posacc() {
   const [isBlockVisible, setIsBlockVisible] = useState(false);
@@ -37,12 +38,12 @@ function Posacc() {
   };
 
   return (
-    <div className="acc_pos"> 
+    <div className="serv_pos">
       <div className="position">
-        <h4 className="position_title">Office Manager</h4>
-        <p className="position_p">untant
-          Handles financial reporting and ensures accurate income and expense
-          accounting.
+        <h4 className="position_title">Office Assistant</h4>
+        <p className="position_p">
+          We are seeking a motivated and organized Office Assistant to join our
+          team.
         </p>
         <button onClick={handleDivClick} className="info-button">
           MORE
@@ -53,46 +54,53 @@ function Posacc() {
           <div onClick={handleCloseClick} className="close-button"></div>
           <div className="block-content">
             <div>
-              <h4 className="full_header">Endless possibilities</h4>
+              <div className="title_apply">
+                <h4 className="full_header">HVAC Service Technician</h4>
+                <Link to="/careerforms/Servform">
+                  <div className="apply_button">APPLY</div>
+                </Link>
+              </div>
               <p className="full_pa">
-                I am excited to introduce you to ChatGPT - an innovative
-                artificial intelligence technology that can help you find
-                answers to all your questions. Whether you need information on
-                the latest news, travel tips, or even just some entertaining
-                jokes, ChatGPT is always ready to assist.
+                Smart Hvac is a reliable company with a good reputation in
+                Clark, Cowlitz, Skamania, Lewis, Yakima, Klickitat WA counties.
+                We are seeking a motivated and organized Office Assistant to
+                join our team. The ideal candidate should have excellent
+                communication skills, be proficient in basic office software,
+                and have a strong command of Microsoft Excel.
+              </p>
+              <h4 className="req_title">Requirements</h4>
+              <ul className="req_list">
+                <li>
+                  Proficiency in Microsoft Excel and other basic office software
+                </li>
+                <li>
+                  Excellent English language skills (both written and spoken)
+                </li>
+                <li>Russian language skills are preferred but not required</li>
+                <li>Strong organizational and multitasking abilities</li>
+                <li>Ability to work 20 hours or more per week.</li>
+                <li>Must be able to pass drug & background check.</li>
+              </ul>
+              <h4 className="req_title">Key Responsibilities</h4>
+              <ul className="req_list">
+                <li>Answer and direct phone calls</li>
+                <li>Schedule appointments and manage calendars</li>
+                <li>Assist with general administrative tasks</li>
+              </ul>
+              <p className="full_pa">
+                Salary: Compensation is negotiable and will be discussed during
+                the interview process.
+              </p>
+              <p className="full_pa">Rate + bonus.</p>
+              <p className="full_pa">
+                We host company sponsored events for the employees and their
+                families. Company provides I-Pads for field Staff.
               </p>
               <p className="full_pa">
-                Paragraph 1: ChatGPT is not just an ordinary chatbot. It is
-                based on cutting-edge technology developed by the OpenAI team
-                and possesses a vast knowledge base collected from various
-                sources. This enables it to provide you with accurate and
-                high-quality answers to a wide range of questions.
+                Responses without resume will not be considered.
               </p>
-              <p className="full_pa">
-                Paragraph 2: But what makes ChatGPT truly remarkable is its
-                ability to learn. You can ask questions sequentially, edit them,
-                and receive new, more precise answers. ChatGPT adapts to your
-                needs and improves its responses based on your feedback. This
-                means that with each interaction, it becomes more accurate and
-                helpful.
-              </p>
-              <p className="full_pa">
-                {" "}
-                Paragraph 3: ChatGPT can also accomplish incredible things when
-                used with a creative approach. It can assist you in generating
-                unique texts, developing creative ideas, or even aiding in
-                writing articles and news for your website. Just ask questions
-                and share your ideas, and ChatGPT will work alongside you to
-                achieve astonishing results.
-              </p>
-              <p className="full_pa">
-                {" "}
-                Conclusion: Don't miss out on the benefits of using ChatGPT on
-                our website. It is ready to help you with any questions and
-                tasks, offering flexibility and the ability to improve with each
-                interaction. Try ChatGPT today and discover a world of new
-                possibilities and incredible outcomes.
-              </p>
+              <p className="full_pa">We look forward to hearing from you!</p>
+              <div className="container_button"></div>
             </div>
           </div>
         </div>
