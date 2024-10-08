@@ -33,17 +33,17 @@ app.post("/discount", (req, res) => {
   }
 
   const mailToUser = {
-    from: "notification@smart-hvacus.com",
+    from: "SmartHVACUS@gmail.com",
     to: email,
     subject: "Schedule Submitted Successfully",
     html: `
-      <p>Thank you for scheduling a service. We will contact you shortly.</p>
-      <p>Please note that this is an automated message, and there is no need to reply to it.</p>
+    <p>Thank you for choosing our services! We will contact you shortly.</p>
+    <p>Please note that this is an automated message, and there is no need to reply to it.</p>
     `,
   };
 
   const mailOptions = {
-    from: "schedule-notification@smart-hvacus.com",
+    from: "SmartHVACUS@gmail.com",
     to: "valllarisa76@gmail.com",
     subject: "New customer's discount!",
     text: `

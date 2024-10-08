@@ -7,19 +7,24 @@ const serverless = require("serverless-http");
 
 const app = express();
 
+const hostReg = process.env.SMTP_REG;
+const smptPort = process.env.SMTP_PORT;
+const smtpUser = process.env.SMTP_USER;
+const smtpPass = process.env.SMTP_PASS;
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 const transporter = nodemailer.createTransport({
-  host: "email-smtp.us-east-1.amazonaws.com",
-  port: 587,
+  host: hostReg,
+  port: smptPort,
   secure: false,
   auth: {
-    user: "AKIAY42MH4QIOIT2OQFD",
-    pass: "BPfbFWEy4PWzHkRp8nVq4YZGThDIDUaF4as468fGHzsL",
+    user: smtpUser,
+    pass: smtpPass,
   },
 });
+
 transporter.verify((error, success) => {
   if (error) {
     console.error("SMTP server connection error:", error);
@@ -30,7 +35,7 @@ transporter.verify((error, success) => {
 
 app.post("/subscribe", (req, res) => {
   console.log("Received form data:", req.body);
-  const { fullName, email, phone, city } = req.body;
+  const { fullName, email, phone, city, title } = req.body;
 
   if (!email) {
     res.status(400).json({ success: false, error: "Email is required" });
@@ -38,24 +43,25 @@ app.post("/subscribe", (req, res) => {
   }
 
   const mailToUser = {
-    from: "notification@smart-hvacus.com",
+    from: "SmartHVACUS@gmail.com",
     to: email,
-    subject: "Schedule Submitted Successfully",
+    subject: "Subscription Confirmation",
     html: `
-      <p>Thank you for scheduling a service. We will contact you shortly.</p>
-      <p>Please note that this is an automated message, and there is no need to reply to it.</p>
+    <p>Thank you for choosing our services! We will contact you shortly.</p>
+    <p>Please note that this is an automated message, and there is no need to reply to it.</p>
     `,
   };
 
   const mailOptions = {
-    from: "schedule-notification@smart-hvacus.com",
+    from: "SmartHVACUS@gmail.com",
     to: "valllarisa76@gmail.com",
-    subject: "New customer`s Subscription!",
+    subject: "New customers Subscription!",
     text: `
       Full Name: ${fullName}
       Email: ${email}
       Phone: ${phone}
       City: ${city}
+      Subscription: ${title}
     `,
   };
 
