@@ -15,21 +15,26 @@
       "function": {
         "DiscountFunction": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/DiscountFunction-70644d2b76376f636867-build.zip"
+          "s3Key": "amplify-builds/DiscountFunction-3738424b786c7333502f-build.zip"
         },
         "SubscribeFunction": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/SubscribeFunction-677663504f536b586138-build.zip"
+          "s3Key": "amplify-builds/SubscribeFunction-6b39774f737850327956-build.zip"
         },
         "CareerFunction": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/CareerFunction-4467537534485a483044-build.zip"
+          "s3Key": "amplify-builds/CareerFunction-523966305a6644466757-build.zip"
+        },
+        "Equipment": {
+          "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
+          "s3Key": "amplify-builds/Equipment-757a39555435382b6776-build.zip"
         }
       },
       "api": {
         "Discount": {},
         "Subscribe": {},
-        "Career": {}
+        "Career": {},
+        "EquipDB": {}
       }
     }
   }

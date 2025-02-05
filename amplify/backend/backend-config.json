@@ -28,6 +28,20 @@
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
     },
+    "EquipDB": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "Equipment"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
+    },
     "Subscribe": {
       "dependsOn": [
         {
@@ -50,6 +64,11 @@
       "service": "Lambda"
     },
     "DiscountFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "Equipment": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -90,6 +109,22 @@
         {
           "category": "function",
           "resourceName": "DiscountFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_Equipment_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "Equipment"
+        }
+      ]
+    },
+    "AMPLIFY_function_Equipment_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "Equipment"
         }
       ]
     },

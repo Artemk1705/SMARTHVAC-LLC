@@ -77,7 +77,7 @@ li {
   width: 100%;
   max-width: 220px;
   font-size: 1.35em;
-  color: white;
+  color: rgb(255, 255, 255);
   border-radius: 2px;
   cursor: pointer;
   transition: 0.3s;
@@ -864,8 +864,8 @@ code {
     margin-top: 0;
   }
   .card {
-    width: calc(var(--index) * 15);
-    height: calc(var(--index) * 23.5);
+    width: calc(var(--index) * 18);
+    height: calc(var(--index) * 25.5);
     margin-left: calc(var(--index) * 3.4);
   }
   .Head_text {
@@ -922,7 +922,7 @@ code {
   }
   .card {
     margin-left: calc(var(--index) * 2.8);
-    height: calc(var(--index) * 26.5);
+    height: calc(var(--index) * 27.5);
   }
 }
 @media screen and (max-width: 1390px) {

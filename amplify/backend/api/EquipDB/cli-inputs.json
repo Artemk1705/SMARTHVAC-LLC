@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "paths": {
+    "/equip": {
+      "name": "/equip",
+      "lambdaFunction": "Equipment",
+      "permissions": {
+        "setting": "open"
+      }
+    }
+  }
+}

@@ -12,6 +12,7 @@ import Servform from "./components/pagesContent/careersPageContent/careerforms/s
 import Schedule from "./components/pages/schedule";
 import Financing from "./components/pages/financing";
 import Products from "./components/pages/porducts";
+import EquipmentPage from "./components/pages/equipment";
 import MaintenancePlan from "./components/pages/mainPlan";
 import Acmaintenance from "./components/pagesContent/mainPageContent/serv/AC_M";
 import Acrep from "./components/pagesContent/mainPageContent/serv/Ac_repl";
@@ -36,6 +37,7 @@ function App() {
         <Route path="/Schedule" element={<Schedule />} />
         <Route path="/Financing" element={<Financing />} />
         <Route path="/Products" element={<Products />} />
+        <Route path="EquipmentPage" element={<EquipmentPage />} />
         <Route path="/MaintenancePlan" element={<MaintenancePlan />} />
         <Route path="/careerforms/Servform" element={<Servform />} />
         <Route path="/serv/AC_M" element={<Acmaintenance />} />

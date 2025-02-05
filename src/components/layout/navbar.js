@@ -55,6 +55,10 @@ function Navbar() {
               <Link to="/MaintenancePlan">MAINTENANCE PLAN</Link>
             </li>
             <li className="about_bar">
+              <Link to="EquipmentPage">EQUIPMENT</Link>
+            </li>
+
+            <li className="about_bar">
               <Link to="/about">ABOUT</Link>
             </li>
             <li className="contact_bar">
