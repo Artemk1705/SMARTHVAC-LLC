@@ -1,6 +1,7 @@
 {
   "name": "smarthvacllc",
   "version": "0.1.0",
+  "homepage": "https://Artemk1705.github.io/SMARTHVAC-LLC/",
   "private": true,
   "dependencies": {
     "@aws-amplify/api": "^6.0.53",
