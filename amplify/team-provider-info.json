@@ -27,7 +27,7 @@
         },
         "Equipment": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/Equipment-757a39555435382b6776-build.zip"
+          "s3Key": "amplify-builds/Equipment-4c7a6e4e6f36502f4f66-build.zip"
         }
       },
       "api": {

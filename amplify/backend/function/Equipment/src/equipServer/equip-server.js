@@ -1,8 +1,8 @@
 const express = require("express");
-const app = express();
 const { Pool } = require("pg");
 const cors = require("cors");
 
+const app = express();
 app.use(cors());
 app.use(express.json());
 
@@ -17,37 +17,56 @@ const pool = new Pool({
   },
 });
 
-// ✅ Маршрут для получения оборудования с фильтрацией по мощности
+// ✅ Запрос оборудования по `power` и `category`
 app.get("/equip", async (req, res) => {
-  console.log("📥 GET /equip called with query:", req.query);
+  console.log("📥 Запрос GET /equip с параметрами:", req.query);
+
+  const { power, category } = req.query;
+
+  if (!power || !category) {
+    return res
+      .status(400)
+      .json({ error: "Параметры 'power' и 'category' обязательны." });
+  }
 
   let client;
   try {
     client = await pool.connect();
-    console.log("✅ Successfully connected to the database.");
+    console.log("✅ Подключение к базе данных успешно.");
 
-    let baseQuery = `SELECT * FROM air_conditioners`;
-    const values = [];
+    // ✅ Определяем таблицу по `category`
+    const categoryMap = {
+      air_conditioners: "air_conditioners",
+      heat_pumps: "heat_pumps",
+      air_handlers: "air_handlers",
+      mini_splits: "mini_splits",
+      furnace: "furnace",
+    };
 
-    if (req.query.power) {
-      baseQuery += ` WHERE power = $1`;
-      values.push(req.query.power);
+    if (!categoryMap[category]) {
+      return res
+        .status(400)
+        .json({ error: "Неверная категория оборудования." });
     }
 
-    console.log("🟡 Executing SQL query:", baseQuery, values);
-    const result = await client.query(baseQuery, values);
+    const query = `SELECT *, '${category}' AS category FROM ${categoryMap[category]} WHERE power = $1`;
+    console.log("🟡 SQL-запрос:", query, "с параметром:", power);
 
-    console.log(`✅ Fetched ${result.rows.length} items from database.`);
+    const result = await client.query(query, [power]);
+
+    console.log(`✅ Найдено ${result.rows.length} записей.`);
     res.json(result.rows);
   } catch (err) {
-    console.error("❌ Database query error:", err);
-    res
-      .status(500)
-      .json({ error: "Database query error", details: err.message });
+    console.error("❌ Ошибка при запросе к базе:", err);
+    res.status(500).json({
+      error: "Ошибка базы данных",
+      details: err.message,
+      stack: err.stack,
+    });
   } finally {
     if (client) {
       client.release();
-      console.log("✅ Connection released.");
+      console.log("✅ Подключение закрыто.");
     }
   }
 });
