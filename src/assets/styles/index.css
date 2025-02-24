@@ -6,7 +6,7 @@ body {
   font-family: GothamPro;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  color: rgb(50, 50, 110);
+  color: #32326e;
   overflow-x: hidden;
   letter-spacing: 0.5px;
   font-size: 1em;
@@ -52,14 +52,52 @@ li {
 .text_i {
   font-size: 1.2em;
 }
+@keyframes gradient {
+  0% {
+    background-color: #a31515;
+  }
+  50% {
+    background-color: #2b2ddf;
+  }
+  100% {
+    background-color: #a31515;
+  }
+}
+
+@keyframes boxShadowPulse {
+  0% {
+    box-shadow: 0 0 3px rgb(43, 46, 223);
+  }
+  50% {
+    box-shadow: 0 0 10px 3px rgba(43, 45, 223, 0.4);
+  }
+  100% {
+    box-shadow: 0 0 3px rgb(43, 46, 223);
+  }
+}
+
 .button_get_sch {
   height: 75px;
   background-color: #2b2ddf;
   white-space: nowrap;
   margin-left: 50px;
   margin-top: 35px;
-  animation: gradient 3s ease infinite;
+  padding: 15px 30px;
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: transform 0.3s ease-in-out;
+  animation: gradient 10s ease infinite, boxShadowPulse 3s ease infinite;
 }
+
+/* Эффект увеличения при наведении */
+.button_get_sch:hover {
+  transform: scale(1.05);
+}
+
 .button_Inp {
   height: 70px;
 }
