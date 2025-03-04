@@ -16,16 +16,17 @@
     "@testing-library/user-event": "^13.5.0",
     "@types/aws-lambda": "^8.10.142",
     "aws-amplify": "^6.6.4",
-    "aws-sdk": "^2.1664.0",
+    "aws-sdk": "^2.1692.0",
     "aws-serverless-express": "^3.4.0",
-    "body-parser": "^1.20.2",
+    "body-parser": "^1.20.3",
     "chart.js": "^4.4.3",
     "cors": "^2.8.5",
-    "express": "^4.19.2",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
     "gsap": "^3.12.5",
     "moment-timezone": "^0.5.45",
     "multer": "^1.4.5-lts.1",
-    "nodemailer": "^6.9.14",
+    "nodemailer": "^6.10.0",
     "nodemailer-mailgun-transport": "^2.1.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
@@ -69,5 +70,10 @@
     "webpack": "^5.95.0",
     "webpack-cli": "^5.1.4",
     "webpack-dev-server": "^5.1.0"
-  }
+  },
+  "description": "This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).",
+  "main": "index.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }

@@ -29,6 +29,9 @@ const Burger = () => {
         <Link to="/MaintenancePlan" onClick={handleBurgerClick}>
           <div className="bur_about">Maintenance Plan</div>
         </Link>
+        <Link to="/EquipmentPage" onClick={handleBurgerClick}>
+          <div className="bur_about">Equipment</div>
+        </Link>
         <Link to="/about" onClick={handleBurgerClick}>
           <div className="bur_about">About</div>
         </Link>

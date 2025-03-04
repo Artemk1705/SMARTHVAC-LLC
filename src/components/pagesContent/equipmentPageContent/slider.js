@@ -8,8 +8,14 @@ const CustomSlider = ({ seerValue, setSeerValue, seerData }) => {
     console.log("📡 Полученные seerData:", seerData); // Проверяем, что вообще пришло
     if (seerData && seerData.length > 0) {
       const uniqueSeerValues = [
-        ...new Set(seerData.map((item) => Math.round(parseFloat(item.seer)))),
-      ].sort((a, b) => a - b); // Сортируем SEER по возрастанию
+        ...new Set(
+          seerData
+            .map((item) => parseFloat(item.seer))
+            .filter((seer) => !isNaN(seer)) // Удаляем NaN
+            .map((seer) => Math.round(seer))
+        ),
+      ].sort((a, b) => a - b);
+
       console.log("✅ Уникальные значения SEER:", uniqueSeerValues);
       setSeerList(uniqueSeerValues);
     }
@@ -55,7 +61,10 @@ const CustomSlider = ({ seerValue, setSeerValue, seerData }) => {
       </h4>
 
       {/* Контейнер шкалы */}
-      <div style={{ position: "relative", width: "100%", textAlign: "center" }}>
+      <div
+        className="eff_bar"
+        style={{ position: "relative", textAlign: "center" }}
+      >
         {/* Отображение чисел над шкалой */}
         {[...Array(8)].map((_, i) => {
           const seer = 13 + i;
@@ -116,7 +125,7 @@ const CustomSlider = ({ seerValue, setSeerValue, seerData }) => {
           <div
             style={{
               position: "absolute",
-              height: "100%",
+              height: "90%",
               width: `${((seerValue - 13) / 7) * 100}%`,
               borderRadius: "5px",
               background: "#32326e",

@@ -31,10 +31,11 @@
   padding: 25px 0;
   height: 600px;
 }
+
 .option_button_back {
   text-align: center;
   margin: 15px;
-  background-color: #b333339f;
+  background-color: #b33333d4;
   padding: 10px;
   width: 100px;
   height: 50px;
@@ -46,6 +47,12 @@
   transition: 0.5s;
   border: none;
   border-radius: 1px;
+  box-shadow: 0 0 5px 2.5px gray;
+}
+
+.option_button:hover,
+.option_button_back:hover {
+  transform: scale(1.05);
 }
 .equip_option_container {
   display: flex;
@@ -57,7 +64,7 @@
 .option_button {
   text-align: center;
   margin: 0px 15px 0 15px;
-  background-color: #2b2ddf;
+  background-color: #32326e;
   padding: 10px;
   width: 150px;
   height: 60px;
@@ -69,6 +76,7 @@
   transition: 0.5s;
   border: none;
   border-radius: 1px;
+  box-shadow: 0 0 5px 2.5px gray;
 }
 .equip_card_content {
   border: #6a7178ae 1px solid;
@@ -86,7 +94,7 @@
 }
 
 .equip_picture {
-  width: 30%;
+  width: 200px;
 }
 
 .equip_page_title_container {
@@ -215,7 +223,10 @@
   font-weight: bold;
   margin-top: 5px;
 }
-
+.eff_bar {
+  width: 85%;
+  margin-left: 7.5%;
+}
 .equip_more_button {
   margin-top: 10px;
   padding: 10px 15px;
@@ -268,4 +279,99 @@
 }
 .eff_current_seer {
   margin-top: 60px;
+}
+.equip_double_container {
+  display: flex;
+  flex-direction: row;
+}
+.equip_h_card {
+  margin: -25px 0;
+  height: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.name_Inp_eq {
+  height: 40px;
+  width: 300px;
+  font-size: 1.15em;
+  border-radius: 10px;
+  border: unset;
+  margin: 10px 20px;
+  margin-top: 100px;
+  padding: 4px 20px;
+  box-shadow: inset 0 0 10px rgba(67, 66, 66, 0.404);
+}
+.but {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 75px 0;
+}
+
+@media screen and (max-width: 450px) {
+  .equip_option_container {
+    flex-direction: column;
+    padding-top: 50px;
+    padding-bottom: 10px;
+  }
+  .option_button {
+    margin-top: 25px;
+  }
+  .multi-category-content {
+    padding: 0;
+    width: 100vw;
+    flex-direction: column-reverse;
+  }
+  .multi-category-card {
+    width: 42vw;
+    margin-right: 0vw;
+    background-color: #32326e24;
+  }
+  .equip_double_container {
+    overflow-x: hidden;
+    margin-left: 0vw;
+    width: 100vw;
+    gap: 10px;
+  }
+  .equip_effiency {
+    height: 450px;
+    width: 90vw;
+    margin-left: 5vw;
+  }
+  .eff_bar {
+    width: 85%;
+    margin-left: 7.5%;
+  }
+  .equip_page_title {
+    margin-top: 150px;
+  }
+  .equip_picture {
+    width: 125px;
+  }
+  .equip_main_title {
+    margin-bottom: 65px;
+  }
+  .equip_page_title_container {
+    margin: 0;
+    width: 100vw;
+  }
+  .option_button_back {
+    width: 150px;
+    height: 60px;
+  }
+  .equip_container {
+    padding-bottom: 100px;
+  }
+  .equip_page_content {
+    flex-direction: column-reverse;
+  }
+  .equip_card_content {
+    width: 78vw;
+    margin-left: 5vw;
+  }
+  .multi-category-card {
+    width: 40vw;
+    margin-left: 0;
+  }
 }
