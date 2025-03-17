@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import CustomSlider from "./slider";
+import FurnaceFilter from "./furnace-filter";
 import EquipForm from "./equip-form";
+import AirHandlerFilter from "./air-handlers-filter";
 import { post } from "aws-amplify/api";
 
 const API_URL =
@@ -63,11 +65,37 @@ const Questionnaire = () => {
   const [seerValue, setSeerValue] = useState(13);
   const [isSuccess, setIsSuccess] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [furnaceType, setFurnaceType] = useState("");
+  const [airHandlerType, setAirHandlerType] = useState("");
+  const [initialEquipment, setInitialEquipment] = useState([]);
+  const [filteredFurnaces, setFilteredFurnaces] = useState([]);
+
+  const shouldShowFurnaceFilter =
+    selectedAnswers[3] === "Furnace" || selectedAnswers[3] === "Furnace and AC";
+
+  const shouldShowAirHandlerFilter = selectedAnswers[3] === "Air Handler";
 
   const handleHouseAnswer = (answer) => {
     setSelectedAnswers([...selectedAnswers, answer]); // ✅ Сохраняем все ответы
     setShowForm(true); // ✅ Показываем форму
   };
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        const data = await response.json();
+        setInitialEquipment(Array.isArray(data) ? data : []);
+        setFilteredEquipment(Array.isArray(data) ? data : []);
+      } catch (error) {
+        console.error("Ошибка при загрузке данных", error);
+        setInitialEquipment([]);
+        setFilteredEquipment([]);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleSubmitForm = async (data) => {
     console.log("📩 Данные формы + ответы:", data);
@@ -200,26 +228,16 @@ const Questionnaire = () => {
     newAnswers[currentStep] = answer;
     setSelectedAnswers(newAnswers);
 
-    console.log(`✅ Ответ на шаге ${currentStep}:`, answer);
-
     if (currentStep === 3) {
       setCurrentStep(4);
     } else if (currentStep === 4) {
       setCurrentStep(5);
     } else if (currentStep === 5) {
-      console.log("🚀 Шаг 5 завершён, показываем форму...");
-      setShowForm(true); // ✅ Показываем форму перед запросом
+      setShowForm(true);
     } else if (currentStep === 6) {
-      console.log("🔍 Вошли в шаг 6, пытаемся определить power...");
-
       const power = getPowerByHouseSize(answer);
       const unitType = selectedAnswers[4] || null;
       const selectedSystem = selectedAnswers[3];
-
-      console.log("🔍 Проверка перед запросом:");
-      console.log("   - System:", selectedSystem);
-      console.log("   - Unit Type:", unitType);
-      console.log("   - Power:", power);
 
       if (!power) {
         console.error(
@@ -256,7 +274,6 @@ const Questionnaire = () => {
       return;
     }
 
-    // ✅ Определяем нужный `typeFilter`
     const typeFilterMap = {
       "Ceiling Recessed": "Residential Ceiling Recessed",
       "Floor Mounted": "Residential Floor Mounted",
@@ -265,13 +282,6 @@ const Questionnaire = () => {
     };
 
     const typeFilter = typeFilterMap[unitType] || null;
-
-    console.log(
-      "📡 Запрос в API с category:",
-      categories,
-      "и type:",
-      typeFilter || "Нет фильтра по type"
-    );
 
     try {
       const responses = await Promise.all(
@@ -283,20 +293,10 @@ const Questionnaire = () => {
           return fetch(url).then((res) => res.json());
         })
       );
-
       let mergedData = responses.flat();
-
-      console.log("📥 Данные перед фильтрацией:", mergedData);
-
       if (typeFilter) {
         mergedData = mergedData.filter((item) => item.type === typeFilter);
-        console.log("🔍 После фильтрации по type:", mergedData);
       }
-
-      console.log(
-        "🔍 Фильтрация по компании. Выбранная компания:",
-        selectedCompany
-      );
 
       if (selectedCompany && selectedCompany !== "Not sure") {
         mergedData = mergedData.filter((item) => {
@@ -306,7 +306,6 @@ const Questionnaire = () => {
           const selectedCompanyName = selectedCompany.toLowerCase().trim();
           return companyName === selectedCompanyName;
         });
-        console.log("🔍 После фильтрации по компании:", mergedData);
       }
 
       console.log("📜 ОТФИЛЬТРОВАННЫЕ ДАННЫЕ:", mergedData);
@@ -319,8 +318,8 @@ const Questionnaire = () => {
     }
   };
 
+  // Сначала фильтруем по SEER (как у тебя сейчас, без изменений)
   const filteredBySeer = filteredEquipment.filter((item) => {
-    // ✅ Если это MiniSplit, пропускаем фильтр SEER
     if (
       [
         "Residential Wall Mount",
@@ -344,7 +343,7 @@ const Questionnaire = () => {
           `⚠️ У элемента ${item.name} нет SEER или он некорректен:`,
           item.seer
         );
-        return false; // ✅ Отбрасываем только если это НЕ MiniSplit
+        return false;
       }
 
       console.log(
@@ -355,19 +354,58 @@ const Questionnaire = () => {
       return Math.round(itemSeer) === seerValue;
     }
 
-    return true; // ✅ Пропускаем все остальные категории
+    return true;
   });
 
-  // ✅ Группируем только отфильтрованные элементы по SEER
-  const groupedFilteredEquipment = filteredBySeer.reduce((acc, item) => {
-    if (!acc[item.category]) {
-      acc[item.category] = [];
-    }
-    acc[item.category].push(item);
-    return acc;
-  }, {});
+  // Теперь добавляем фильтр по типу Furnace (поверх SEER)
+  const filteredByFurnaceType = filteredBySeer.filter((item) => {
+    if (shouldShowFurnaceFilter && furnaceType) {
+      if (item.category.toLowerCase().trim() === "furnace") {
+        const match =
+          item.type.toLowerCase().trim() === furnaceType.toLowerCase().trim();
+        if (!match) {
+          console.log(
+            `🔥 Отбросили печь (${item.name}), не подходит по типу: ${furnaceType}`
+          );
+        }
+        return match;
+      }
 
-  // ✅ Получение доступных вариантов для текущего шага
+      return true; // ✅ пропускаем AC и другое оборудование без фильтра
+    }
+
+    return true; // ✅ Пропускаем остальные случаи, когда нет фильтра для печей
+  });
+
+  const filteredByAirHandlerType = filteredByFurnaceType.filter((item) => {
+    if (shouldShowAirHandlerFilter && airHandlerType) {
+      const match =
+        item.category.toLowerCase().trim() === "air_handlers" &&
+        item.type.toLowerCase().trim() === airHandlerType.toLowerCase().trim();
+
+      if (!match && item.category === "air_handlers") {
+        console.log(
+          `❄️ Отбросили Air Handler (${item.name}), не подходит по типу: ${airHandlerType}`
+        );
+      }
+      return match;
+    }
+
+    return true;
+  });
+  // Группируем именно отфильтрованные данные (по SEER и по Furnace Type одновременно!)
+  const groupedFilteredEquipment = filteredByAirHandlerType.reduce(
+    (acc, item) => {
+      if (!acc[item.category]) {
+        acc[item.category] = [];
+      }
+      acc[item.category].push(item);
+      return acc;
+    },
+    {}
+  );
+
+  // Получаем доступные варианты вопросов для текущего шага (без изменений)
   const getCurrentOptions = () => {
     console.log(`🔍 Получение опций для шага ${currentStep}`);
 
@@ -382,14 +420,17 @@ const Questionnaire = () => {
       return questions[6];
     }
 
-    console.log("❌ Ошибка: Нет доступных вопросов!");
     return [];
   };
 
+  // Создаём список категорий и проверяем на множественные категории (без изменений)
   const categories = [
     ...new Set(filteredEquipment.map((item) => item.category)),
   ];
+
   const hasMultipleCategories = categories.length > 1;
+
+  // Группируем исходный набор equipment по категориям (без изменений)
   const groupedEquipment = filteredEquipment.reduce((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
@@ -418,7 +459,6 @@ const Questionnaire = () => {
             hasMultipleCategories ? "multi-category-container" : ""
           }`}
         >
-          {/* ✅ Показываем форму после выбора дома (шаг 5) */}
           {showForm ? (
             <EquipForm answers={selectedAnswers} onSubmit={handleSubmitForm} />
           ) : !showEquipment ? (
@@ -473,22 +513,42 @@ const Questionnaire = () => {
                                   className="equip_picture"
                                   src={item.image_url}
                                   alt={item.name}
-                                  onError={(e) => {
-                                    console.error(
-                                      "Picture error:",
-                                      item.image_url
-                                    );
-                                    e.target.src =
-                                      "https://via.placeholder.com/200?text=No+Image";
-                                  }}
                                 />
                               )}
                               <div className="equip_text_container">
-                                <h3 className="equip_h_card">{item.name}</h3>
+                                <div className="equip_h_title_container">
+                                  <h3 className="equip_card_name">
+                                    {item.name}
+                                  </h3>
+                                  <div className="equip_price">
+                                    <div className="first_price_container">
+                                      <h2>Price $</h2>
+                                      <h3 className="first_price">
+                                        {item.price
+                                          ? (
+                                              parseFloat(
+                                                item.price.replace(/[$,]/g, "")
+                                              ) * 3
+                                            ).toFixed(2)
+                                          : "N/A"}
+                                      </h3>
+                                    </div>
+                                    <div>
+                                      <h3 className="discount_price">
+                                        {item.price
+                                          ? (
+                                              parseFloat(
+                                                item.price.replace(/[$,]/g, "")
+                                              ) * 2.5
+                                            ).toFixed(2)
+                                          : "Call"}
+                                      </h3>
+                                    </div>
+                                  </div>
+                                </div>
                                 <p className="equip_p_card">
                                   <strong>Company:</strong>{" "}
-                                  {companyNames[item.company_id] ||
-                                    "Неизвестно"}
+                                  {companyNames[item.company_id] || "Unknown"}
                                 </p>
                                 <p className="equip_p_card">
                                   <strong>Type:</strong> {item.type}
@@ -515,17 +575,31 @@ const Questionnaire = () => {
                     )
                   )
                 ) : (
-                  <p>No equipment available for selected SEER.</p>
+                  <p>No equipment available for selected criteria.</p>
                 )}
               </div>
-              <div className="equip_effiency">
-                <h2 className="eff_title">Estimate</h2>
-                <h4>Price currently unavailable</h4>
+
+              <div className="filter_block">
                 <CustomSlider
                   seerValue={seerValue}
                   setSeerValue={setSeerValue}
                   seerData={filteredEquipment}
                 />
+
+                {shouldShowFurnaceFilter && (
+                  <FurnaceFilter
+                    furnaceType={furnaceType}
+                    setFurnaceType={setFurnaceType}
+                    equipmentData={initialEquipment}
+                  />
+                )}
+
+                {shouldShowAirHandlerFilter && (
+                  <AirHandlerFilter
+                    airHandlerType={airHandlerType}
+                    setAirHandlerType={setAirHandlerType}
+                  />
+                )}
               </div>
             </div>
           )}

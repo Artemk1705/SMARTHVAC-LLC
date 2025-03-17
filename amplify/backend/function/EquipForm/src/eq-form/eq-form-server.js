@@ -25,12 +25,16 @@ const transporter = nodemailer.createTransport({
 
 app.post("/equipForm", (req, res) => {
   console.log("Received form data:", req.body);
-  const { name, email, phone, adress } = req.body;
+  const { name, email, phone, city, adress, zip, selectedAnswers } = req.body;
 
   if (!email) {
     res.status(400).json({ success: false, error: "Email is required" });
     return;
   }
+
+  const formattedAnswers = selectedAnswers
+    ? selectedAnswers.join(", ")
+    : "No answers provided";
 
   const mailToUser = {
     from: "SmartHVACUS@gmail.com",
@@ -50,7 +54,10 @@ app.post("/equipForm", (req, res) => {
       Full Name: ${name}
       Email: ${email}
       Phone: ${phone}
+      city: ${city}
       Adress: ${adress}
+      Zip code: ${zip}
+      Selected Answers: ${formattedAnswers}
     `,
   };
 

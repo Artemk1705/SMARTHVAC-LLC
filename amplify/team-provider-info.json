@@ -31,7 +31,7 @@
         },
         "EquipForm": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/EquipForm-383550413876714e592b-build.zip"
+          "s3Key": "amplify-builds/EquipForm-374b54437942366d4352-build.zip"
         }
       },
       "api": {

@@ -5,7 +5,9 @@ const EquipForm = ({ answers, onSubmit }) => {
     name: "",
     email: "",
     phone: "",
+    city: "",
     adress: "",
+    zip: "",
   });
 
   const handleChange = (e) => {
@@ -14,7 +16,7 @@ const EquipForm = ({ answers, onSubmit }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ ...formData, selectedAnswers: answers }); // ✅ Теперь answers передаётся правильно
+    onSubmit({ ...formData, selectedAnswers: answers });
   };
 
   return (
@@ -41,7 +43,7 @@ const EquipForm = ({ answers, onSubmit }) => {
         />
         <input
           className="name_Inp_eq"
-          type="phone"
+          type="tel"
           name="phone"
           placeholder="Your phone number"
           value={formData.phone}
@@ -51,9 +53,27 @@ const EquipForm = ({ answers, onSubmit }) => {
         <input
           className="name_Inp_eq"
           type="text"
+          name="city"
+          placeholder="Your city"
+          value={formData.city} // ✅ Исправлено
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="name_Inp_eq"
+          type="text"
           name="adress"
-          placeholder="Your address"
-          value={formData.adress}
+          placeholder="Your adress"
+          value={formData.adress} // ✅ Исправлено
+          onChange={handleChange}
+          required
+        />
+        <input
+          className="name_Inp_eq"
+          type="text"
+          name="zip"
+          placeholder="Your zip code"
+          value={formData.zip} // ✅ Исправлено
           onChange={handleChange}
           required
         />
