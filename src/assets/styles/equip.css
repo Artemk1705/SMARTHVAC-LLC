@@ -318,6 +318,7 @@
   padding-bottom: 50px;
 }
 .filter_block {
+  width: 70vw;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 0px 5px 2.5px rgba(160, 157, 157, 0.648);
@@ -376,6 +377,30 @@
 
 .discount_price {
   text-decoration: underline;
+}
+.loading_screen {
+  display: flex; /* Включаем флекс-контейнер */
+  flex-direction: column; /* Располагаем элементы вертикально */
+  justify-content: center; /* Центрируем по вертикали */
+  align-items: center; /* Центрируем по горизонтали */
+  height: 100vh; /* Делаем экран на всю высоту */
+  margin-bottom: 50px; /* Отступ снизу, чтобы футер не прилипал */
+}
+
+.spinner {
+  width: 80px; /* Размер круга */
+  height: 80px;
+  border: 8px solid rgba(0, 0, 0, 0.1); /* Полупрозрачный бордер */
+  border-top-color: #007bff; /* Синий цвет загрузки */
+  border-radius: 50%; /* Делаем круг */
+  animation: spin 1s linear infinite; /* Крутящаяся анимация */
+  margin-top: 20px; /* Отступ от текста */
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -442,5 +467,8 @@
   .multi-category-card {
     width: 40vw;
     margin-left: 0;
+  }
+  .filter_block {
+    width: 90vw;
   }
 }

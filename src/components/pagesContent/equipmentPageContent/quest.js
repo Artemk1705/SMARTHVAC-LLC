@@ -4,6 +4,7 @@ import FurnaceFilter from "./furnace-filter";
 import EquipForm from "./equip-form";
 import AirHandlerFilter from "./air-handlers-filter";
 import { post } from "aws-amplify/api";
+import LoadingBar from "./loadingSc";
 
 const API_URL =
   "https://r44benc4hk.execute-api.us-east-1.amazonaws.com/dev/equip";
@@ -55,7 +56,7 @@ const questions = {
   ],
 };
 
-const Questionnaire = () => {
+export default function Questionnaire() {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
@@ -69,6 +70,7 @@ const Questionnaire = () => {
   const [airHandlerType, setAirHandlerType] = useState("");
   const [initialEquipment, setInitialEquipment] = useState([]);
   const [filteredFurnaces, setFilteredFurnaces] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const shouldShowFurnaceFilter =
     selectedAnswers[3] === "Furnace" || selectedAnswers[3] === "Furnace and AC";
@@ -76,12 +78,13 @@ const Questionnaire = () => {
   const shouldShowAirHandlerFilter = selectedAnswers[3] === "Air Handler";
 
   const handleHouseAnswer = (answer) => {
-    setSelectedAnswers([...selectedAnswers, answer]); // ✅ Сохраняем все ответы
-    setShowForm(true); // ✅ Показываем форму
+    setSelectedAnswers([...selectedAnswers, answer]);
+    setShowForm(true);
   };
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const response = await fetch(API_URL);
         const data = await response.json();
@@ -91,6 +94,8 @@ const Questionnaire = () => {
         console.error("Ошибка при загрузке данных", error);
         setInitialEquipment([]);
         setFilteredEquipment([]);
+      } finally {
+        setLoading(false);
       }
     };
 
@@ -99,7 +104,7 @@ const Questionnaire = () => {
 
   const handleSubmitForm = async (data) => {
     console.log("📩 Данные формы + ответы:", data);
-
+    setLoading(true);
     setFormData(data);
     setShowForm(false);
     setShowEquipment(true);
@@ -143,6 +148,7 @@ const Questionnaire = () => {
       setIsSuccess(false);
     } finally {
       setModalOpen(true);
+      setLoading(false);
     }
   };
 
@@ -360,21 +366,18 @@ const Questionnaire = () => {
   // Теперь добавляем фильтр по типу Furnace (поверх SEER)
   const filteredByFurnaceType = filteredBySeer.filter((item) => {
     if (shouldShowFurnaceFilter && furnaceType) {
-      if (item.category.toLowerCase().trim() === "furnace") {
-        const match =
-          item.type.toLowerCase().trim() === furnaceType.toLowerCase().trim();
-        if (!match) {
-          console.log(
-            `🔥 Отбросили печь (${item.name}), не подходит по типу: ${furnaceType}`
-          );
-        }
-        return match;
+      const match =
+        item.category.toLowerCase().trim() === "furnace" &&
+        item.type.toLowerCase().trim() === furnaceType.toLowerCase().trim();
+      if (!match && item.category === "furnace") {
+        console.log(
+          `🔥 Отбросили печь (${item.name}), не подходит по типу: ${furnaceType}`
+        );
       }
-
-      return true; // ✅ пропускаем AC и другое оборудование без фильтра
+      return match;
     }
 
-    return true; // ✅ Пропускаем остальные случаи, когда нет фильтра для печей
+    return true; // для остальных категорий пропускаем фильтр
   });
 
   const filteredByAirHandlerType = filteredByFurnaceType.filter((item) => {
@@ -445,167 +448,200 @@ const Questionnaire = () => {
         hasMultipleCategories ? "multi-category" : ""
       }`}
     >
-      <h1 className="equip_main_title">Selection of equipment</h1>
-      <h2>Step {currentStep + 1}</h2>
-      <h3>Choose your option</h3>
+      {loading ? (
+        <div className="loading_screen">
+          <h2>Loading equipment...</h2>
+          <LoadingBar className="spinner" />
+        </div>
+      ) : (
+        <>
+          {" "}
+          <h1 className="equip_main_title">Selection of equipment</h1>
+          <h2>Step {currentStep + 1}</h2>
+          <h3>Choose your option</h3>
+          <div
+            className={`equip_page_content ${
+              hasMultipleCategories ? "multi-category-content" : ""
+            }`}
+          >
+            <div
+              className={`equip_container ${
+                hasMultipleCategories ? "multi-category-container" : ""
+              }`}
+            >
+              {showForm ? (
+                <EquipForm
+                  answers={selectedAnswers}
+                  onSubmit={handleSubmitForm}
+                />
+              ) : !showEquipment ? (
+                <>
+                  <div className="equip_option_container">
+                    {(getCurrentOptions() || []).map((option, index) => (
+                      <button
+                        className="option_button"
+                        key={index}
+                        onClick={() => handleAnswer(option)}
+                      >
+                        {option}
+                      </button>
+                    ))}
+                  </div>
 
-      <div
-        className={`equip_page_content ${
-          hasMultipleCategories ? "multi-category-content" : ""
-        }`}
-      >
-        <div
-          className={`equip_container ${
-            hasMultipleCategories ? "multi-category-container" : ""
-          }`}
-        >
-          {showForm ? (
-            <EquipForm answers={selectedAnswers} onSubmit={handleSubmitForm} />
-          ) : !showEquipment ? (
-            <>
-              <div className="equip_option_container">
-                {(getCurrentOptions() || []).map((option, index) => (
-                  <button
-                    className="option_button"
-                    key={index}
-                    onClick={() => handleAnswer(option)}
-                  >
-                    {option}
-                  </button>
-                ))}
-              </div>
-
-              {currentStep > 0 && (
-                <button
-                  className="option_button_back"
-                  onClick={() => {
-                    setSelectedAnswers(selectedAnswers.slice(0, -1));
-                    setCurrentStep(currentStep - 1);
-                  }}
-                >
-                  Back
-                </button>
-              )}
-            </>
-          ) : (
-            <div className="equip_page_content">
-              <div className="equip_double_container">
-                {Object.keys(groupedFilteredEquipment).length > 0 ? (
-                  Object.entries(groupedFilteredEquipment).map(
-                    ([category, items]) => (
-                      <div key={category} className="equip_category_section">
-                        <div
-                          className={`equip_card_container ${
-                            hasMultipleCategories ? "multi-category-cards" : ""
-                          }`}
-                        >
-                          {items.map((item, index) => (
+                  {currentStep > 0 && (
+                    <button
+                      className="option_button_back"
+                      onClick={() => {
+                        setSelectedAnswers(selectedAnswers.slice(0, -1));
+                        setCurrentStep(currentStep - 1);
+                      }}
+                    >
+                      Back
+                    </button>
+                  )}
+                </>
+              ) : (
+                <div className="equip_page_content">
+                  <div className="equip_double_container">
+                    {Object.keys(groupedFilteredEquipment).length > 0 ? (
+                      Object.entries(groupedFilteredEquipment).map(
+                        ([category, items]) => (
+                          <div
+                            key={category}
+                            className="equip_category_section"
+                          >
                             <div
-                              key={index}
-                              className={`equip_card_content ${
+                              className={`equip_card_container ${
                                 hasMultipleCategories
-                                  ? "multi-category-card"
+                                  ? "multi-category-cards"
                                   : ""
                               }`}
                             >
-                              {item.image_url && (
-                                <img
-                                  className="equip_picture"
-                                  src={item.image_url}
-                                  alt={item.name}
-                                />
-                              )}
-                              <div className="equip_text_container">
-                                <div className="equip_h_title_container">
-                                  <h3 className="equip_card_name">
-                                    {item.name}
-                                  </h3>
-                                  <div className="equip_price">
-                                    <div className="first_price_container">
-                                      <h2>Price $</h2>
-                                      <h3 className="first_price">
-                                        {item.price
-                                          ? (
-                                              parseFloat(
-                                                item.price.replace(/[$,]/g, "")
-                                              ) * 3
-                                            ).toFixed(2)
-                                          : "N/A"}
+                              {items.map((item, index) => (
+                                <div
+                                  key={index}
+                                  className={`equip_card_content ${
+                                    hasMultipleCategories
+                                      ? "multi-category-card"
+                                      : ""
+                                  }`}
+                                >
+                                  {item.image_url && (
+                                    <img
+                                      className="equip_picture"
+                                      src={item.image_url}
+                                      alt={item.name}
+                                    />
+                                  )}
+                                  <div className="equip_text_container">
+                                    <div className="equip_h_title_container">
+                                      <h3 className="equip_card_name">
+                                        {item.name}
                                       </h3>
+                                      <div className="equip_price">
+                                        <div className="first_price_container">
+                                          <h2>Price $</h2>
+                                          <h3 className="first_price">
+                                            {item.price
+                                              ? (
+                                                  parseFloat(
+                                                    item.price.replace(
+                                                      /[$,]/g,
+                                                      ""
+                                                    )
+                                                  ) *
+                                                    3 +
+                                                  (item.category ===
+                                                  "air_conditioners"
+                                                    ? 700
+                                                    : 0)
+                                                ).toFixed(2)
+                                              : "N/A"}
+                                          </h3>
+                                        </div>
+                                        <div>
+                                          <h3 className="discount_price">
+                                            {item.price
+                                              ? (
+                                                  parseFloat(
+                                                    item.price.replace(
+                                                      /[$,]/g,
+                                                      ""
+                                                    )
+                                                  ) *
+                                                    2.5 +
+                                                  (item.category ===
+                                                  "air_conditioners"
+                                                    ? 700
+                                                    : 0)
+                                                ).toFixed(2)
+                                              : "Call"}
+                                          </h3>
+                                        </div>
+                                      </div>
                                     </div>
-                                    <div>
-                                      <h3 className="discount_price">
-                                        {item.price
-                                          ? (
-                                              parseFloat(
-                                                item.price.replace(/[$,]/g, "")
-                                              ) * 2.5
-                                            ).toFixed(2)
-                                          : "Call"}
-                                      </h3>
-                                    </div>
+                                    <p className="equip_p_card">
+                                      <strong>Company:</strong>{" "}
+                                      {companyNames[item.company_id] ||
+                                        "Unknown"}
+                                    </p>
+                                    <p className="equip_p_card">
+                                      <strong>Type:</strong> {item.type}
+                                    </p>
+                                    <p className="equip_p_card">
+                                      <strong>Model:</strong> {item.model}
+                                    </p>
+                                    <p className="equip_p_card">
+                                      <strong>BTU:</strong> {item.btu}
+                                    </p>
+                                    {item.category !== "furnace" && (
+                                      <p className="equip_p_card">
+                                        <strong>SEER:</strong> {item.seer}
+                                      </p>
+                                    )}
+                                    <p className="equip_p_card">
+                                      <strong>Power:</strong> {item.power} t
+                                    </p>
                                   </div>
                                 </div>
-                                <p className="equip_p_card">
-                                  <strong>Company:</strong>{" "}
-                                  {companyNames[item.company_id] || "Unknown"}
-                                </p>
-                                <p className="equip_p_card">
-                                  <strong>Type:</strong> {item.type}
-                                </p>
-                                <p className="equip_p_card">
-                                  <strong>Model:</strong> {item.model}
-                                </p>
-                                <p className="equip_p_card">
-                                  <strong>BTU:</strong> {item.btu}
-                                </p>
-                                {item.category !== "furnace" && (
-                                  <p className="equip_p_card">
-                                    <strong>SEER:</strong> {item.seer}
-                                  </p>
-                                )}
-                                <p className="equip_p_card">
-                                  <strong>Power:</strong> {item.power} t
-                                </p>
-                              </div>
+                              ))}
                             </div>
-                          ))}
-                        </div>
-                      </div>
-                    )
-                  )
-                ) : (
-                  <p>No equipment available for selected criteria.</p>
-                )}
-              </div>
+                          </div>
+                        )
+                      )
+                    ) : (
+                      <p>No equipment available for selected criteria.</p>
+                    )}
+                  </div>
 
-              <div className="filter_block">
-                <CustomSlider
-                  seerValue={seerValue}
-                  setSeerValue={setSeerValue}
-                  seerData={filteredEquipment}
-                />
+                  <div className="filter_block">
+                    <CustomSlider
+                      seerValue={seerValue}
+                      setSeerValue={setSeerValue}
+                      seerData={filteredEquipment}
+                    />
 
-                {shouldShowFurnaceFilter && (
-                  <FurnaceFilter
-                    furnaceType={furnaceType}
-                    setFurnaceType={setFurnaceType}
-                    equipmentData={initialEquipment}
-                  />
-                )}
+                    {shouldShowFurnaceFilter && (
+                      <FurnaceFilter
+                        furnaceType={furnaceType}
+                        setFurnaceType={setFurnaceType}
+                        equipmentData={initialEquipment}
+                      />
+                    )}
 
-                {shouldShowAirHandlerFilter && (
-                  <AirHandlerFilter
-                    airHandlerType={airHandlerType}
-                    setAirHandlerType={setAirHandlerType}
-                  />
-                )}
-              </div>
+                    {shouldShowAirHandlerFilter && (
+                      <AirHandlerFilter
+                        airHandlerType={airHandlerType}
+                        setAirHandlerType={setAirHandlerType}
+                      />
+                    )}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
-        </div>
-      </div>
+          </div>
+        </>
+      )}
     </div>
   );
-};
-export default Questionnaire;
+}

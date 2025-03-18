@@ -4,7 +4,7 @@ const AirHandlerFilter = ({ airHandlerType, setAirHandlerType }) => {
   const airHandlerOptions = ["Variable Speed", "Multy Speed"];
 
   return (
-    <div className="airhandler-filter">
+    <div className="furnace-filter">
       <h3 className="filter-title">Select Air Handler Type</h3>
       <div className="filter-buttons">
         {airHandlerOptions.map((option) => (
