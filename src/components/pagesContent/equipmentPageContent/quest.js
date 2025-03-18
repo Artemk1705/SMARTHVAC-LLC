@@ -450,7 +450,7 @@ export default function Questionnaire() {
     >
       {loading ? (
         <div className="loading_screen">
-          <h2>Loading equipment...</h2>
+          <h2>Loading ...</h2>
           <LoadingBar className="spinner" />
         </div>
       ) : (
