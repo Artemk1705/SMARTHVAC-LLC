@@ -18,6 +18,11 @@ const MapGoogle = () => {
       map: map,
     });
   };
+  console.log("ENV File Loaded:", process.env);
+  console.log(
+    "Google Maps API Key:",
+    process.env.REACT_APP_GOOGLE_MAPS_API_KEY
+  );
 
   return (
     <LoadScript googleMapsApiKey="AIzaSyC1fHkHT0q2zLKlV0qbKxHAMjPw6DGFpeY">
