@@ -1,12 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 const FurnaceFilter = ({ furnaceType, setFurnaceType }) => {
   const furnaceOptions = [
-    "Single stage",
     "Two stage",
+    "Single stage",
     "Variable two stage",
     "Modulating Variable",
   ];
+
+  // Устанавливаем "Two stage" при первом рендере
+  useEffect(() => {
+    if (!furnaceType) {
+      setFurnaceType("Two stage");
+    }
+  }, [furnaceType, setFurnaceType]);
 
   return (
     <div className="furnace-filter">

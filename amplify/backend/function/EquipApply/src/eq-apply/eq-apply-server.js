@@ -23,9 +23,9 @@ const transporter = nodemailer.createTransport({
   },
 });
 
-app.post("/equipForm", (req, res) => {
+app.post("/eapply", (req, res) => {
   console.log("Received form data:", req.body);
-  const { name, email, phone, city, adress, zip, selectedAnswers } = req.body;
+  const { email, quantity, model, mname, terms, selectedAnswers } = req.body;
 
   if (!email) {
     res.status(400).json({ success: false, error: "Email is required" });
@@ -36,34 +36,53 @@ app.post("/equipForm", (req, res) => {
     ? selectedAnswers.join(", ")
     : "No answers provided";
 
+  const mailToUser = {
+    from: "SmartHVACUS@gmail.com",
+    to: email,
+    subject: "Equipment Submitted Successfully",
+    html: `
+    <p>Thank you for choosing our services! We will contact you shortly.</p>
+    <p>Please note that this is an automated message, and there is no need to reply to it.</p>
+    `,
+  };
+
   const mailOptions = {
     from: "SmartHVACUS@gmail.com",
     to: "valllarisa76@gmail.com",
     subject: "New customer's equipment interest!",
     text: `
-      Full Name: ${name}
-      Email: ${email}
-      Phone: ${phone}
-      city: ${city}
-      Adress: ${adress}
-      Zip code: ${zip}
-      Selected Answers: ${formattedAnswers}
+      Quantity: ${quantity}
+      Equipment's model: ${model}
+      Equipment's name: ${mname}
+      Terms: ${terms}
     `,
   };
 
-  console.log("Attempting to send admin notification email...");
-  transporter.sendMail(mailOptions, (error, info) => {
+  console.log("Attempting to send user notification email...");
+  transporter.sendMail(mailToUser, (error, info) => {
     if (error) {
-      console.error("Error sending admin email:", error.message);
+      console.error("Error sending user notification:", error.message);
       res.status(500).json({
         success: false,
         error: "Error sending email: " + error.message,
       });
     } else {
-      console.log("Admin email sent successfully:", info.response);
-      res.status(200).json({
-        success: true,
-        message: "Service booking submitted successfully",
+      console.log("User notification sent successfully:", info.response);
+      console.log("Attempting to send admin notification email...");
+      transporter.sendMail(mailOptions, (error, info) => {
+        if (error) {
+          console.error("Error sending admin email:", error.message);
+          res.status(500).json({
+            success: false,
+            error: "Error sending email: " + error.message,
+          });
+        } else {
+          console.log("Admin email sent successfully:", info.response);
+          res.status(200).json({
+            success: true,
+            message: "Service booking submitted successfully",
+          });
+        }
       });
     }
   });

@@ -249,10 +249,11 @@ code {
 .nav {
   display: flex;
   justify-content: space-between;
-  padding-top: 15px;
+  padding: 7.5px 0;
   font-family: GothamProMedium;
   width: 100vw;
   background-color: rgba(240, 248, 255, 0);
+  background: radial-gradient(circle at 115% 250%, #cb000a 20%, #091f57 80%);
 }
 .nav_logo {
   margin-top: -0px;
@@ -271,10 +272,11 @@ code {
   margin-left: auto;
   justify-content: space-evenly;
   display: flex;
+  align-items: center;
 }
 .nav_bar ul {
   display: flex;
-  margin-top: 30px;
+
   justify-content: space-evenly;
 }
 .more_info {
@@ -293,7 +295,7 @@ code {
 .contact_bar a,
 .careers_bar a {
   margin: 0px 35px;
-  color: rgb(50, 50, 110);
+  color: white;
   text-decoration: none;
 }
 .main_bar a:hover,

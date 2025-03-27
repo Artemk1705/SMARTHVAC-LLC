@@ -5,6 +5,8 @@ import EquipForm from "./equip-form";
 import AirHandlerFilter from "./air-handlers-filter";
 import { post } from "aws-amplify/api";
 import LoadingBar from "./loadingSc";
+import ConfirmModal from "./confirm";
+import ApplyEquipmentForm from "./eq-apply-form";
 
 const API_URL =
   "https://r44benc4hk.execute-api.us-east-1.amazonaws.com/dev/equip";
@@ -20,15 +22,10 @@ const companyNames = {
 const questions = {
   0: ["Single Fam", "Condo", "Mobile", "Townhome", "Commercial"],
   1: ["New Installation", "Replacement"],
-  2: ["Gas", "Electrical", "Minisplit"],
+  2: ["AC", "Furnace", "Electrical", "Minisplit"],
   3: {
-    Gas: [
-      "AC",
-      "Heat Pump",
-      "Furnace",
-      "Furnace and AC",
-      "Furnace and Heat Pump",
-    ],
+    AC: ["AC", "Furnace and AC"],
+    Furnace: ["Furnace", "Furnace and AC", "Furnace and Heat Pump"],
     Electrical: ["Air Handler", "Heat Pump"],
     Minisplit: [
       "Wall Mounted",
@@ -37,14 +34,7 @@ const questions = {
       "Ceiling Recessed",
     ],
   },
-  4: [
-    "American Standart",
-    "Mitsubishi",
-    "Hitachi",
-    "Ameristar",
-    "York",
-    "Not sure",
-  ],
+  4: ["American Standart", "Mitsubishi", "Hitachi", "Ameristar", "York"],
   5: [
     "<1000 sqft",
     "1000-1500 sqft",
@@ -71,12 +61,33 @@ export default function Questionnaire() {
   const [initialEquipment, setInitialEquipment] = useState([]);
   const [filteredFurnaces, setFilteredFurnaces] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [isBlockVisible, setIsBlockVisible] = useState(false);
+  const [isBlockRendered, setIsBlockRendered] = useState(false);
+  const [blockHeight, setBlockHeight] = useState(0);
+  const [selectedItem, setSelectedItem] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [showConfirm, setShowConfirm] = useState(false);
+  const [pendingItem, setPendingItem] = useState(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      const windowHeight = window.innerHeight;
+      setBlockHeight(windowHeight);
+    };
+
+    handleResize();
+
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
 
   const shouldShowFurnaceFilter =
-    selectedAnswers[3] === "Furnace" || selectedAnswers[3] === "Furnace and AC";
-
+    selectedAnswers[3] === "Furnace" ||
+    selectedAnswers[3] === "Furnace and AC" ||
+    selectedAnswers[3] === "Furnace and Heat Pump";
   const shouldShowAirHandlerFilter = selectedAnswers[3] === "Air Handler";
-
   const handleHouseAnswer = (answer) => {
     setSelectedAnswers([...selectedAnswers, answer]);
     setShowForm(true);
@@ -101,6 +112,22 @@ export default function Questionnaire() {
 
     fetchData();
   }, []);
+
+  // 1. Загрузка при старте
+  useEffect(() => {
+    const saved = localStorage.getItem("myCart");
+    if (saved) {
+      setCartItems(JSON.parse(saved));
+      window.dispatchEvent(new Event("cartUpdated"));
+    }
+  }, []);
+
+  // 2. Сохраняем при каждом изменении
+  useEffect(() => {
+    if (cartItems.length > 0) {
+      localStorage.setItem("myCart", JSON.stringify(cartItems));
+    }
+  }, [cartItems]);
 
   const handleSubmitForm = async (data) => {
     console.log("📩 Данные формы + ответы:", data);
@@ -152,24 +179,13 @@ export default function Questionnaire() {
     }
   };
 
-  useEffect(() => {
-    console.log(`🔄 Компонент обновлён, текущий шаг: ${currentStep}`);
-  }, [currentStep]);
+  useEffect(() => {}, [currentStep]);
 
   useEffect(() => {
-    console.log(`🔄 useEffect: текущий шаг ${currentStep}`);
-
     if (currentStep === 6) {
-      console.log("🔍 Вошли в шаг 6 через useEffect, выполняем запрос...");
-
       const power = getPowerByHouseSize(selectedAnswers[5]);
       const unitType = selectedAnswers[3] || null;
       const selectedSystem = selectedAnswers[3];
-
-      console.log("🔍 Проверка перед запросом:");
-      console.log("   - System:", selectedSystem);
-      console.log("   - Unit Type:", unitType);
-      console.log("   - Power:", power);
 
       if (!power) {
         console.error(
@@ -182,6 +198,46 @@ export default function Questionnaire() {
       fetchFilteredEquipment(power, selectedSystem, unitType);
     }
   }, [currentStep]);
+  const confirmAddToCart = () => {
+    const item = pendingItem;
+    const alreadyInCart = cartItems.find(
+      (i) => i.name === item.name && i.model === item.model
+    );
+
+    if (alreadyInCart) {
+      const updatedCart = cartItems.map((i) =>
+        i.name === item.name && i.model === item.model
+          ? { ...i, qty: i.qty + 1 }
+          : i
+      );
+      setCartItems(updatedCart);
+    } else {
+      const newItem = { ...item, qty: 1 };
+      setCartItems([...cartItems, newItem]);
+    }
+
+    setShowConfirm(false);
+    setPendingItem(null);
+  };
+  const handleAddToCart = (item) => {
+    setPendingItem(item);
+    setShowConfirm(true);
+    const alreadyInCart = cartItems.find(
+      (i) => i.name === item.name && i.model === item.model
+    );
+
+    if (alreadyInCart) {
+      const updatedCart = cartItems.map((i) =>
+        i.name === item.name && i.model === item.model
+          ? { ...i, qty: i.qty + 1 }
+          : i
+      );
+      setCartItems(updatedCart);
+    } else {
+      const newItem = { ...item, qty: 1 };
+      setCartItems([...cartItems, newItem]);
+    }
+  };
 
   const getPowerByHouseSize = (size) => {
     console.log("🔍 Проверка getPowerByHouseSize. Входящий size:", size);
@@ -324,7 +380,6 @@ export default function Questionnaire() {
     }
   };
 
-  // Сначала фильтруем по SEER (как у тебя сейчас, без изменений)
   const filteredBySeer = filteredEquipment.filter((item) => {
     if (
       [
@@ -365,19 +420,22 @@ export default function Questionnaire() {
 
   // Теперь добавляем фильтр по типу Furnace (поверх SEER)
   const filteredByFurnaceType = filteredBySeer.filter((item) => {
-    if (shouldShowFurnaceFilter && furnaceType) {
-      const match =
-        item.category.toLowerCase().trim() === "furnace" &&
-        item.type.toLowerCase().trim() === furnaceType.toLowerCase().trim();
-      if (!match && item.category === "furnace") {
-        console.log(
-          `🔥 Отбросили печь (${item.name}), не подходит по типу: ${furnaceType}`
-        );
+    if (item.category.toLowerCase().trim() === "furnace") {
+      if (shouldShowFurnaceFilter && furnaceType) {
+        const match =
+          item.type.toLowerCase().trim() === furnaceType.toLowerCase().trim();
+
+        if (!match) {
+          console.log(
+            `🔥 Отбросили печь (${item.name}), не подходит по типу: ${furnaceType}`
+          );
+        }
+
+        return match;
       }
-      return match;
     }
 
-    return true; // для остальных категорий пропускаем фильтр
+    return true; // все остальные категории (не furnace) пропускаем
   });
 
   const filteredByAirHandlerType = filteredByFurnaceType.filter((item) => {
@@ -396,7 +454,7 @@ export default function Questionnaire() {
 
     return true;
   });
-  // Группируем именно отфильтрованные данные (по SEER и по Furnace Type одновременно!)
+
   const groupedFilteredEquipment = filteredByAirHandlerType.reduce(
     (acc, item) => {
       if (!acc[item.category]) {
@@ -408,7 +466,6 @@ export default function Questionnaire() {
     {}
   );
 
-  // Получаем доступные варианты вопросов для текущего шага (без изменений)
   const getCurrentOptions = () => {
     console.log(`🔍 Получение опций для шага ${currentStep}`);
 
@@ -416,7 +473,25 @@ export default function Questionnaire() {
     if (currentStep === 1) return questions[1];
     if (currentStep === 2) return questions[2];
     if (currentStep === 3) return questions[3][selectedAnswers[2]] || [];
-    if (currentStep === 4) return questions[4];
+
+    if (currentStep === 4) {
+      const isMinisplit =
+        selectedAnswers[2] === "Minisplit" &&
+        questions[3]["Minisplit"].includes(selectedAnswers[3]);
+
+      if (isMinisplit) {
+        return ["Mitsubishi", "York"];
+      } else {
+        return [
+          "American Standart",
+          "Hitachi",
+          "Ameristar",
+          "York", // Оставляем York
+          // Не включаем Mitsubishi
+        ];
+      }
+    }
+
     if (currentStep === 5) return questions[5];
     if (currentStep === 6) {
       console.log("✅ Шаг 6 найден! Передаём вопросы.");
@@ -426,14 +501,12 @@ export default function Questionnaire() {
     return [];
   };
 
-  // Создаём список категорий и проверяем на множественные категории (без изменений)
   const categories = [
     ...new Set(filteredEquipment.map((item) => item.category)),
   ];
 
   const hasMultipleCategories = categories.length > 1;
 
-  // Группируем исходный набор equipment по категориям (без изменений)
   const groupedEquipment = filteredEquipment.reduce((acc, item) => {
     if (!acc[item.category]) {
       acc[item.category] = [];
@@ -455,10 +528,7 @@ export default function Questionnaire() {
         </div>
       ) : (
         <>
-          {" "}
           <h1 className="equip_main_title">Selection of equipment</h1>
-          <h2>Step {currentStep + 1}</h2>
-          <h3>Choose your option</h3>
           <div
             className={`equip_page_content ${
               hasMultipleCategories ? "multi-category-content" : ""
@@ -505,7 +575,7 @@ export default function Questionnaire() {
                   <div className="equip_double_container">
                     {Object.keys(groupedFilteredEquipment).length > 0 ? (
                       Object.entries(groupedFilteredEquipment).map(
-                        ([category, items]) => (
+                        ([category, items], catIndex) => (
                           <div
                             key={category}
                             className="equip_category_section"
@@ -513,7 +583,7 @@ export default function Questionnaire() {
                             <div
                               className={`equip_card_container ${
                                 hasMultipleCategories
-                                  ? "multi-category-cards"
+                                  ? `multi-category-cards-${catIndex + 1}`
                                   : ""
                               }`}
                             >
@@ -522,7 +592,7 @@ export default function Questionnaire() {
                                   key={index}
                                   className={`equip_card_content ${
                                     hasMultipleCategories
-                                      ? "multi-category-card"
+                                      ? `multi-category-card-${catIndex + 1}`
                                       : ""
                                   }`}
                                 >
@@ -538,47 +608,6 @@ export default function Questionnaire() {
                                       <h3 className="equip_card_name">
                                         {item.name}
                                       </h3>
-                                      <div className="equip_price">
-                                        <div className="first_price_container">
-                                          <h2>Price $</h2>
-                                          <h3 className="first_price">
-                                            {item.price
-                                              ? (
-                                                  parseFloat(
-                                                    item.price.replace(
-                                                      /[$,]/g,
-                                                      ""
-                                                    )
-                                                  ) *
-                                                    3 +
-                                                  (item.category ===
-                                                  "air_conditioners"
-                                                    ? 700
-                                                    : 0)
-                                                ).toFixed(2)
-                                              : "N/A"}
-                                          </h3>
-                                        </div>
-                                        <div>
-                                          <h3 className="discount_price">
-                                            {item.price
-                                              ? (
-                                                  parseFloat(
-                                                    item.price.replace(
-                                                      /[$,]/g,
-                                                      ""
-                                                    )
-                                                  ) *
-                                                    2.5 +
-                                                  (item.category ===
-                                                  "air_conditioners"
-                                                    ? 700
-                                                    : 0)
-                                                ).toFixed(2)
-                                              : "Call"}
-                                          </h3>
-                                        </div>
-                                      </div>
                                     </div>
                                     <p className="equip_p_card">
                                       <strong>Company:</strong>{" "}
@@ -602,6 +631,59 @@ export default function Questionnaire() {
                                     <p className="equip_p_card">
                                       <strong>Power:</strong> {item.power} t
                                     </p>
+                                    <div className="equip_price">
+                                      <div className="first_price_container">
+                                        <h2>Price $</h2>
+                                        <h3 className="first_price">
+                                          {item.price
+                                            ? (
+                                                parseFloat(
+                                                  item.price.replace(
+                                                    /[$,]/g,
+                                                    ""
+                                                  )
+                                                ) *
+                                                  3 +
+                                                (item.category ===
+                                                "air_conditioners"
+                                                  ? 700
+                                                  : 0)
+                                              ).toFixed(2)
+                                            : "N/A"}
+                                        </h3>
+                                      </div>
+                                      <div>
+                                        <h3 className="discount_price">
+                                          {item.price
+                                            ? (
+                                                parseFloat(
+                                                  item.price.replace(
+                                                    /[$,]/g,
+                                                    ""
+                                                  )
+                                                ) *
+                                                  2.5 +
+                                                (item.category ===
+                                                "air_conditioners"
+                                                  ? 700
+                                                  : 0)
+                                              ).toFixed(2)
+                                            : "Call"}
+                                        </h3>
+                                      </div>
+                                    </div>
+                                    <button
+                                      onClick={() => handleAddToCart(item)}
+                                      className="eq_cart_button"
+                                    >
+                                      🛒 Add to cart
+                                    </button>
+                                    <ConfirmModal
+                                      isOpen={showConfirm}
+                                      onClose={() => setShowConfirm(false)}
+                                      onConfirm={confirmAddToCart}
+                                      message="Do you want to add this equipment to your cart?"
+                                    />
                                   </div>
                                 </div>
                               ))}
@@ -613,12 +695,18 @@ export default function Questionnaire() {
                       <p>No equipment available for selected criteria.</p>
                     )}
                   </div>
-
+                  <h1 className="equip_ch_title">{selectedAnswers[3]}</h1>
                   <div className="filter_block">
                     <CustomSlider
                       seerValue={seerValue}
                       setSeerValue={setSeerValue}
                       seerData={filteredEquipment}
+                      category={
+                        selectedAnswers[3] === "Heat Pump" ||
+                        selectedAnswers[3] === "Furnace and Heat Pump"
+                          ? "heat_pumps"
+                          : "default"
+                      }
                     />
 
                     {shouldShowFurnaceFilter && (

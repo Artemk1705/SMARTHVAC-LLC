@@ -51,9 +51,7 @@ export default function Equipment({ selectedTypes }) {
 
   return (
     <div>
-      <div className="equip_page_title_container">
-        <h1 className="equip_page_title">Available Equipment</h1>
-      </div>
+      <div className="equip_page_title_container"></div>
 
       <div>
         {equipment.length === 0 ? (

@@ -21,7 +21,7 @@ const EquipForm = ({ answers, onSubmit }) => {
 
   return (
     <div className="eq_form_container">
-      <h3>Заполните форму:</h3>
+      <h3>Fill in your contact details</h3>
       <form onSubmit={handleSubmit}>
         <input
           className="name_Inp_eq"

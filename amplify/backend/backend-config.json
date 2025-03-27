@@ -69,6 +69,20 @@
       ],
       "providerPlugin": "awscloudformation",
       "service": "API Gateway"
+    },
+    "equipapply": {
+      "dependsOn": [
+        {
+          "attributes": [
+            "Name",
+            "Arn"
+          ],
+          "category": "function",
+          "resourceName": "EquipApply"
+        }
+      ],
+      "providerPlugin": "awscloudformation",
+      "service": "API Gateway"
     }
   },
   "function": {
@@ -78,6 +92,11 @@
       "service": "Lambda"
     },
     "DiscountFunction": {
+      "build": true,
+      "providerPlugin": "awscloudformation",
+      "service": "Lambda"
+    },
+    "EquipApply": {
       "build": true,
       "providerPlugin": "awscloudformation",
       "service": "Lambda"
@@ -128,6 +147,22 @@
         {
           "category": "function",
           "resourceName": "DiscountFunction"
+        }
+      ]
+    },
+    "AMPLIFY_function_EquipApply_deploymentBucketName": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EquipApply"
+        }
+      ]
+    },
+    "AMPLIFY_function_EquipApply_s3Key": {
+      "usedBy": [
+        {
+          "category": "function",
+          "resourceName": "EquipApply"
         }
       ]
     },

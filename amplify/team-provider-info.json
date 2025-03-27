@@ -31,7 +31,11 @@
         },
         "EquipForm": {
           "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
-          "s3Key": "amplify-builds/EquipForm-374b54437942366d4352-build.zip"
+          "s3Key": "amplify-builds/EquipForm-686939594a4770336b61-build.zip"
+        },
+        "EquipApply": {
+          "deploymentBucketName": "amplify-smarthvacllc-dev-ce077-deployment",
+          "s3Key": "amplify-builds/EquipApply-7059654355714478746a-build.zip"
         }
       },
       "api": {
@@ -39,7 +43,8 @@
         "Subscribe": {},
         "Career": {},
         "EquipDB": {},
-        "equipForm": {}
+        "equipForm": {},
+        "equipapply": {}
       }
     }
   }

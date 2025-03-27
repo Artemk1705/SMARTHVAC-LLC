@@ -67,6 +67,9 @@ function Navbar() {
             <li className="careers_bar">
               <Link to="/careers">CAREERS</Link>
             </li>
+            <li className="careers_bar">
+              <Link to="/Cart">CART</Link>
+            </li>
           </ul>
         )}
       </div>
