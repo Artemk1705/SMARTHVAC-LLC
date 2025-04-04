@@ -8,7 +8,7 @@ export default function Cart() {
     window.scrollTo(0, 0);
   }, []);
   return (
-    <div className="career_page">
+    <div>
       <Navbar />
       <CartPage />
       <Footer />

@@ -5,10 +5,12 @@ const bodyParser = require("body-parser");
 const serverless = require("serverless-http");
 
 const app = express();
+
 const hostReg = process.env.SMTP_REG;
 const smptPort = process.env.SMTP_PORT;
 const smtpUser = process.env.SMTP_USER;
 const smtpPass = process.env.SMTP_PASS;
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,24 +27,35 @@ const transporter = nodemailer.createTransport({
 
 app.post("/eapply", (req, res) => {
   console.log("Received form data:", req.body);
-  const { email, quantity, model, mname, terms, selectedAnswers } = req.body;
+
+  const { email, fullName, phone, quantity, terms, selectedAnswers } = req.body;
 
   if (!email) {
     res.status(400).json({ success: false, error: "Email is required" });
     return;
   }
 
-  const formattedAnswers = selectedAnswers
-    ? selectedAnswers.join(", ")
-    : "No answers provided";
+  const formattedAnswers = Array.isArray(selectedAnswers)
+    ? selectedAnswers
+        .map((entry, i) => {
+          return `Equipment ${i + 1}:
+Name: ${entry.name}
+Model: ${entry.model}
+Power: ${entry.power}t
+Qty: ${entry.qty}
+Price: $${entry.price}`;
+        })
+        .join("\n\n")
+    : "No equipment details provided";
 
   const mailToUser = {
     from: "SmartHVACUS@gmail.com",
     to: email,
-    subject: "Equipment Submitted Successfully",
+    subject: "Equipment Order Submitted Successfully",
     html: `
-    <p>Thank you for choosing our services! We will contact you shortly.</p>
-    <p>Please note that this is an automated message, and there is no need to reply to it.</p>
+      <p>Dear ${fullName || "Customer"},</p>
+      <p>Thank you for choosing our services! We will contact you shortly.</p>
+      <p>Please note that this is an automated message, and there is no need to reply to it.</p>
     `,
   };
 
@@ -51,10 +64,15 @@ app.post("/eapply", (req, res) => {
     to: "valllarisa76@gmail.com",
     subject: "New customer's equipment interest!",
     text: `
-      Quantity: ${quantity}
-      Equipment's model: ${model}
-      Equipment's name: ${mname}
-      Terms: ${terms}
+New Equipment Request:
+
+Customer Name: ${fullName}
+Customer Email: ${email}
+Customer Phone: ${phone}
+Desired Installation Date: ${terms}
+Total Quantity: ${quantity}
+
+${formattedAnswers}
     `,
   };
 

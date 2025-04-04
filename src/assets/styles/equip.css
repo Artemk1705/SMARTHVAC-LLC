@@ -16,10 +16,10 @@
 }
 .equip_card_container {
   display: grid;
-  grid-template-columns: repeat(3, 1fr); /* 3 колонки */
-  gap: 20px; /* Расстояние между карточками */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
   justify-content: center;
-  align-items: stretch; /* Равномерное растяжение карточек */
+  align-items: stretch;
 }
 .eq_block {
   position: fixed;
@@ -316,7 +316,6 @@
   border: unset;
   padding: 25px;
   border-radius: 10px;
-  transform: scale(1.02);
 }
 
 /* Карточки в режиме нескольких категорий */
@@ -506,11 +505,11 @@
   border: #6a7178ae 1px solid;
   margin: 25px 0;
   padding: 25px;
-  height: 600px;
+  height: 515px;
   width: 27vw;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   box-shadow: 0px 0px 5px 2.5px rgba(160, 157, 157, 0.648);
 }
@@ -520,6 +519,7 @@
   justify-content: space-evenly;
   align-items: center;
   text-align: center;
+  margin: 20px 0;
 }
 .equip_cart_title_page {
   margin: 50px;
@@ -577,6 +577,7 @@
   color: white;
   transition: 0.3s;
   border-radius: 3px;
+  margin-left: 5px;
 }
 .clear_cart_button:hover,
 .equip_cart_remove:hover {
@@ -585,19 +586,20 @@
 .confirm-overlay {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.5);
+  background: rgba(114, 114, 114, 0.24);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 1000;
 }
-
 .confirm-modal {
   background: white;
   padding: 2rem;
   border-radius: 12px;
   max-width: 400px;
   width: 90%;
+  max-height: 90vh; /* ограничиваем по высоте окна */
+  overflow-y: auto; /* вертикальный скролл при необходимости */
   text-align: center;
   box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
 }
@@ -617,7 +619,7 @@
 }
 
 .confirm-btn.yes {
-  background: #22c55e;
+  background: #cb000ab3;
   color: white;
 }
 
@@ -632,6 +634,76 @@
   font-size: 1.5em;
   margin: 100px 0px 300px 0px;
 }
+.eq_cart_button {
+  border: unset;
+  background-color: #32326e;
+  box-shadow: 0 0 5px 2px rgba(128, 128, 128, 0.718);
+  color: white;
+  border-radius: 3px;
+  font-size: 1.25em;
+  padding: 5px 10px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+.eq_cart_button:hover {
+  background-color: #cb000ab3;
+}
+.submit_cart_button {
+  background-color: #32326e;
+  border: unset;
+  padding: 5px 10px;
+  font-size: 1.15em;
+  font-weight: 700;
+  color: white;
+  transition: 0.3s;
+  border-radius: 3px;
+  margin-right: 5px;
+  transition: 0.3s;
+}
+
+.submit_cart_button:hover {
+  background-color: #171732;
+}
+
+.eq_appr_button,
+.eq_cancel_button {
+  font-size: 1.15em;
+  border-radius: 7px;
+  width: 200px;
+}
+.eq_term_title {
+  margin-top: 55px;
+}
+
+.appl_inp {
+  margin-top: 40px;
+}
+.progress-bar {
+  height: 6px;
+  width: 100%;
+  background: linear-gradient(90deg, #2a8cf4 0%, #1cc88a 100%);
+  animation: progressAnimation 1s infinite linear;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+.qty_controls {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.qty_cart_title {
+  margin-bottom: 15px;
+}
+@keyframes progressAnimation {
+  0% {
+    background-position: 0% 0%;
+  }
+  100% {
+    background-position: 100% 0%;
+  }
+}
+
 @keyframes spin {
   to {
     transform: rotate(360deg);
@@ -639,6 +711,42 @@
 }
 
 @media screen and (max-width: 450px) {
+  .eq_term_title {
+    margin-top: 35px;
+  }
+  .appl_inp {
+    margin-top: 25px;
+  }
+  .filter-buttons {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .confirm-modal {
+    margin-bottom: 150px;
+    width: 80%;
+  }
+  .confirm-overlay {
+    width: 100vw;
+  }
+  .cart_page_main_title {
+    text-align: center;
+  }
+  .equip_cart_text_container p,
+  .equip_card_cart_container h3 {
+    margin: 10px 0;
+  }
+  .qty_cart_title {
+  }
+  .equip_cart_card_container {
+    grid-template-columns: 1fr;
+  }
+  .equip_cart_card {
+    width: 80vw;
+  }
+  .equip_cart_title_page {
+    margin-top: 150px;
+  }
   .equip_option_container {
     flex-direction: column;
     padding-top: 50px;
@@ -670,7 +778,6 @@
   }
   .eff_bar {
     width: 85%;
-    margin-left: 7.5%;
   }
   .equip_page_title {
     margin-top: 150px;
@@ -705,5 +812,6 @@
   }
   .filter_block {
     width: 90vw;
+    margin-left: 20px;
   }
 }

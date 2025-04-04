@@ -8,7 +8,7 @@ export default function LoadingBar() {
         stroke="#34346d"
         strokeWidth="8"
         fill="none"
-        strokeDasharray="314" // 2 * π * 50 (длина окружности)
+        strokeDasharray="314"
         strokeDashoffset="314"
         strokeLinecap="round"
         style={{

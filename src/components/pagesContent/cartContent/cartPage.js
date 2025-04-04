@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import ConfirmModal from "../equipmentPageContent/confirm";
+import EqApplyForm from "./eq-apply-form";
 
 export default function CartPage() {
   const [showRemoveConfirm, setShowRemoveConfirm] = useState(false);
   const [itemToRemoveIndex, setItemToRemoveIndex] = useState(null);
   const [cartItems, setCartItems] = useState([]);
+  const [showRequestForm, setShowRequestForm] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     const savedCart = localStorage.getItem("myCart");
@@ -31,7 +34,7 @@ export default function CartPage() {
         }
         return i;
       })
-      .filter((i) => i.qty > 0); // удаляем, если qty < 1
+      .filter((i) => i.qty > 0);
 
     setCartItems(updatedCart);
     localStorage.setItem("myCart", JSON.stringify(updatedCart));
@@ -51,9 +54,18 @@ export default function CartPage() {
   return (
     <div className="cart_page">
       <div className="equip_cart_title_page">
-        <h1>Your Equipment Cart</h1>
+        <h1 className="cart_page_main_title">Your Equipment Cart</h1>
       </div>
       <div className="clear_cart_block">
+        <button
+          className="submit_cart_button"
+          onClick={() => {
+            setSelectedItem({ cart: cartItems });
+            setShowRequestForm(true);
+          }}
+        >
+          Submit Cart
+        </button>
         <button className="clear_cart_button" onClick={clearCart}>
           Clear Cart
         </button>
@@ -87,24 +99,27 @@ export default function CartPage() {
                         ).toFixed(2)}
                       </p>
                     )}
+                    <div className="qty_controls">
+                      <h4 className="qty_cart_title">Quantity</h4>
+                      <div>
+                        <button
+                          className="equip_quant_but"
+                          onClick={() => handleQtyChange(item, -1)}
+                          disabled={item.qty <= 1}
+                        >
+                          −
+                        </button>
+                        <span className="equip_quant">{item.qty}</span>
+                        <button
+                          className="equip_quant_but"
+                          onClick={() => handleQtyChange(item, 1)}
+                        >
+                          +
+                        </button>
+                      </div>
+                    </div>
                   </div>
-                  <h4>Quantity</h4>
-                  <div className="qty_controls">
-                    <button
-                      className="equip_quant_but"
-                      onClick={() => handleQtyChange(item, -1)}
-                      disabled={item.qty <= 1}
-                    >
-                      −
-                    </button>
-                    <span className="equip_quant">{item.qty}</span>
-                    <button
-                      className="equip_quant_but"
-                      onClick={() => handleQtyChange(item, 1)}
-                    >
-                      +
-                    </button>
-                  </div>
+
                   <button
                     className="equip_cart_remove"
                     onClick={() => {
@@ -126,6 +141,12 @@ export default function CartPage() {
           </div>
         </>
       )}
+      <EqApplyForm
+        setCartItems={setCartItems}
+        isOpen={showRequestForm}
+        onClose={() => setShowRequestForm(false)}
+        item={selectedItem}
+      />
     </div>
   );
 }

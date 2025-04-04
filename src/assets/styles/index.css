@@ -11,6 +11,14 @@ body {
   letter-spacing: 0.5px;
   font-size: 1em;
 }
+html,
+body {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  width: 100%;
+}
+
 :root {
   --index: calc(1vw + 0.6vh);
 }
@@ -484,14 +492,13 @@ code {
 }
 .burger-menu {
   position: fixed;
-  top: -0;
+  top: -0px;
   left: 0;
   height: 100vh;
   width: 100vw;
   backdrop-filter: blur(10px);
   background-color: rgba(95, 95, 97, 0.723);
   padding: 10px;
-  border: 2px solid #1319be41;
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   overflow-y: auto;
@@ -500,6 +507,13 @@ code {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+}
+.bur_links_container {
+  margin-top: -75px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  text-align: center;
 }
 .burger.open .burger-menu {
   width: 100vw;
@@ -862,6 +876,20 @@ code {
 
 .loaded #mainContent {
   display: block;
+}
+
+.policy_block {
+  width: 80vw;
+  margin-left: 10vw;
+  margin-top: 75px;
+}
+.policy_block_app {
+  padding-top: 40px;
+}
+
+.check_box_policy {
+  transform: scale(1.5);
+  margin: 0 20px 20px 0;
 }
 
 @keyframes slog {
@@ -1528,9 +1556,9 @@ code {
     margin-bottom: 13.5%;
   }
   .logo_photo {
-    top: 0px;
-    left: 40.5vw;
-    width: 20%;
+    top: 7px;
+    left: 43.5vw;
+    width: 16%;
   }
   .swiper-button-next {
     margin-right: 2vw;

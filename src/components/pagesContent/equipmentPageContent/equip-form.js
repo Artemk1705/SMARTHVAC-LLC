@@ -77,6 +77,37 @@ const EquipForm = ({ answers, onSubmit }) => {
           onChange={handleChange}
           required
         />
+        <div className="policy_block">
+          <input
+            className="check_box_policy"
+            type="checkbox"
+            name="consent"
+            required
+          />
+          <span>
+            By submitting this form above I consent to Better Air Northwest
+            contact me via texts, phone, emails and voicemails for promotions,
+            marketing messages & offers even if I’m on any DNC registries and
+            use an automatic phone dialing system. I agree to the{" "}
+            <a
+              href="/SMARTHVAC-LLC/files/privacy-policy.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              privacy policy
+            </a>{" "}
+            and{" "}
+            <a
+              href="/SMARTHVAC-LLC/files/terms-and-conditions.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              terms & conditions
+            </a>
+            . Message frequency varies; Message & Data rates may apply. Text
+            STOP anytime to unsubscribe.
+          </span>
+        </div>
         <div className="but">
           <button className="eq_submit_button" type="submit">
             Submit

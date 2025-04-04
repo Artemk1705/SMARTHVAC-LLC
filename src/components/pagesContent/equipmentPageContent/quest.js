@@ -6,7 +6,6 @@ import AirHandlerFilter from "./air-handlers-filter";
 import { post } from "aws-amplify/api";
 import LoadingBar from "./loadingSc";
 import ConfirmModal from "./confirm";
-import ApplyEquipmentForm from "./eq-apply-form";
 
 const API_URL =
   "https://r44benc4hk.execute-api.us-east-1.amazonaws.com/dev/equip";
@@ -88,6 +87,7 @@ export default function Questionnaire() {
     selectedAnswers[3] === "Furnace and AC" ||
     selectedAnswers[3] === "Furnace and Heat Pump";
   const shouldShowAirHandlerFilter = selectedAnswers[3] === "Air Handler";
+
   const handleHouseAnswer = (answer) => {
     setSelectedAnswers([...selectedAnswers, answer]);
     setShowForm(true);
@@ -113,7 +113,6 @@ export default function Questionnaire() {
     fetchData();
   }, []);
 
-  // 1. Загрузка при старте
   useEffect(() => {
     const saved = localStorage.getItem("myCart");
     if (saved) {
@@ -122,7 +121,6 @@ export default function Questionnaire() {
     }
   }, []);
 
-  // 2. Сохраняем при каждом изменении
   useEffect(() => {
     if (cartItems.length > 0) {
       localStorage.setItem("myCart", JSON.stringify(cartItems));
@@ -198,6 +196,12 @@ export default function Questionnaire() {
       fetchFilteredEquipment(power, selectedSystem, unitType);
     }
   }, [currentStep]);
+
+  const handleAddToCart = (item) => {
+    setPendingItem(item);
+    setShowConfirm(true);
+  };
+
   const confirmAddToCart = () => {
     const item = pendingItem;
     const alreadyInCart = cartItems.find(
@@ -211,32 +215,16 @@ export default function Questionnaire() {
           : i
       );
       setCartItems(updatedCart);
+      localStorage.setItem("myCart", JSON.stringify(updatedCart));
     } else {
       const newItem = { ...item, qty: 1 };
-      setCartItems([...cartItems, newItem]);
+      const updatedCart = [...cartItems, newItem];
+      setCartItems(updatedCart);
+      localStorage.setItem("myCart", JSON.stringify(updatedCart));
     }
 
     setShowConfirm(false);
     setPendingItem(null);
-  };
-  const handleAddToCart = (item) => {
-    setPendingItem(item);
-    setShowConfirm(true);
-    const alreadyInCart = cartItems.find(
-      (i) => i.name === item.name && i.model === item.model
-    );
-
-    if (alreadyInCart) {
-      const updatedCart = cartItems.map((i) =>
-        i.name === item.name && i.model === item.model
-          ? { ...i, qty: i.qty + 1 }
-          : i
-      );
-      setCartItems(updatedCart);
-    } else {
-      const newItem = { ...item, qty: 1 };
-      setCartItems([...cartItems, newItem]);
-    }
   };
 
   const getPowerByHouseSize = (size) => {
@@ -418,7 +406,6 @@ export default function Questionnaire() {
     return true;
   });
 
-  // Теперь добавляем фильтр по типу Furnace (поверх SEER)
   const filteredByFurnaceType = filteredBySeer.filter((item) => {
     if (item.category.toLowerCase().trim() === "furnace") {
       if (shouldShowFurnaceFilter && furnaceType) {
@@ -435,7 +422,7 @@ export default function Questionnaire() {
       }
     }
 
-    return true; // все остальные категории (не furnace) пропускаем
+    return true;
   });
 
   const filteredByAirHandlerType = filteredByFurnaceType.filter((item) => {
@@ -482,13 +469,7 @@ export default function Questionnaire() {
       if (isMinisplit) {
         return ["Mitsubishi", "York"];
       } else {
-        return [
-          "American Standart",
-          "Hitachi",
-          "Ameristar",
-          "York", // Оставляем York
-          // Не включаем Mitsubishi
-        ];
+        return ["American Standart", "Hitachi", "Ameristar", "York"];
       }
     }
 
@@ -676,14 +657,8 @@ export default function Questionnaire() {
                                       onClick={() => handleAddToCart(item)}
                                       className="eq_cart_button"
                                     >
-                                      🛒 Add to cart
+                                      Add to cart
                                     </button>
-                                    <ConfirmModal
-                                      isOpen={showConfirm}
-                                      onClose={() => setShowConfirm(false)}
-                                      onConfirm={confirmAddToCart}
-                                      message="Do you want to add this equipment to your cart?"
-                                    />
                                   </div>
                                 </div>
                               ))}
@@ -730,6 +705,12 @@ export default function Questionnaire() {
           </div>
         </>
       )}
+      <ConfirmModal
+        isOpen={showConfirm}
+        onClose={() => setShowConfirm(false)}
+        onConfirm={confirmAddToCart}
+        message="Do you want to add this equipment to your cart?"
+      />
     </div>
   );
 }
