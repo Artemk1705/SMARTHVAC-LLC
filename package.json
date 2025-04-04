@@ -1,7 +1,6 @@
 {
   "name": "smarthvacllc",
   "version": "0.1.0",
-  "homepage": "https://Artemk1705.github.io/SMARTHVAC-LLC/",
   "private": true,
   "dependencies": {
     "@aws-amplify/api": "^6.0.53",
@@ -41,8 +40,6 @@
   },
   "scripts": {
     "predeploy": "npm run build",
-    "deploy": "gh-pages -d build",
-    "check-env": "echo $REACT_APP_GOOGLE_MAPS_API_KEY",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
