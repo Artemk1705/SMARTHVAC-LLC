@@ -137,7 +137,7 @@ function FormDis() {
               marketing messages & offers even if I’m on any DNC registries and
               use an automatic phone dialing system. I agree to the{" "}
               <a
-                href="/SMARTHVAC-LLC/files/privacy-policy.pdf"
+                href="https://smarthvacllc.s3.us-east-1.amazonaws.com/Privacy+Policy.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
@@ -145,7 +145,7 @@ function FormDis() {
               </a>{" "}
               and{" "}
               <a
-                href="/SMARTHVAC-LLC/files/terms-and-conditions.pdf"
+                href="https://smarthvacllc.s3.us-east-1.amazonaws.com/Web+Site+Terms+and+Conditions+of+Use.pdf"
                 target="_blank"
                 rel="noopener noreferrer"
               >
