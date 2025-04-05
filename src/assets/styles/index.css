@@ -877,11 +877,16 @@ code {
 .loaded #mainContent {
   display: block;
 }
-
-.policy_block {
+.policy_block_equip {
   width: 80vw;
   margin-left: 10vw;
   margin-top: 75px;
+}
+
+.policy_block {
+  width: 80vw;
+  margin-top: 75px;
+  padding-bottom: 30px;
 }
 .policy_block_app {
   padding-top: 40px;
@@ -890,6 +895,19 @@ code {
 .check_box_policy {
   transform: scale(1.5);
   margin: 0 20px 20px 0;
+}
+.form_radio_block {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  margin: 0px 0 40px 0;
+}
+.radio_policy_1 {
+  margin-right: 40px;
+}
+
+.opt_in_label {
 }
 
 @keyframes slog {

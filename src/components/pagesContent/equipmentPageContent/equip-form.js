@@ -77,18 +77,28 @@ const EquipForm = ({ answers, onSubmit }) => {
           onChange={handleChange}
           required
         />
-        <div className="policy_block">
-          <input
-            className="check_box_policy"
-            type="checkbox"
-            name="consent"
-            required
-          />
+        <div className="policy_block_equip">
+          <div className="form_radio_block">
+            <label className="radio_policy_1">
+              <input
+                className="opt_in_label"
+                type="radio"
+                name="consent"
+                value="opt-in"
+                required
+              />
+              Opt-in
+            </label>
+            <label className="radio_policy">
+              <input type="radio" name="consent" value="opt-out" />
+              Opt-out
+            </label>
+          </div>
           <span>
-            By submitting this form above I consent to Better Air Northwest
-            contact me via texts, phone, emails and voicemails for promotions,
-            marketing messages & offers even if I’m on any DNC registries and
-            use an automatic phone dialing system. I agree to the{" "}
+            By submitting this form above I consent to SMART HVAC LLC contact me
+            via texts, phone, emails and voicemails for promotions, marketing
+            messages & offers even if I’m on any DNC registries and use an
+            automatic phone dialing system. I agree to the{" "}
             <a
               href="https://smarthvacllc.s3.us-east-1.amazonaws.com/Privacy+Policy.pdf"
               target="_blank"
@@ -104,8 +114,8 @@ const EquipForm = ({ answers, onSubmit }) => {
             >
               terms & conditions
             </a>
-            . Message frequency varies; Message & Data rates may apply. Text
-            STOP anytime to unsubscribe.
+            Message frequency varies; Message & Data rates may apply. Text STOP
+            anytime to unsubscribe.
           </span>
         </div>
         <div className="but">
