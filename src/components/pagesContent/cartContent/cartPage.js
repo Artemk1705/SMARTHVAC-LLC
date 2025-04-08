@@ -99,24 +99,24 @@ export default function CartPage() {
                         ).toFixed(2)}
                       </p>
                     )}
-                    <div className="qty_controls">
-                      <h4 className="qty_cart_title">Quantity</h4>
-                      <div>
-                        <button
-                          className="equip_quant_but"
-                          onClick={() => handleQtyChange(item, -1)}
-                          disabled={item.qty <= 1}
-                        >
-                          −
-                        </button>
-                        <span className="equip_quant">{item.qty}</span>
-                        <button
-                          className="equip_quant_but"
-                          onClick={() => handleQtyChange(item, 1)}
-                        >
-                          +
-                        </button>
-                      </div>
+                  </div>
+                  <div className="qty_controls">
+                    <h4 className="qty_cart_title">Quantity</h4>
+                    <div>
+                      <button
+                        className="equip_quant_but"
+                        onClick={() => handleQtyChange(item, -1)}
+                        disabled={item.qty <= 1}
+                      >
+                        −
+                      </button>
+                      <span className="equip_quant">{item.qty}</span>
+                      <button
+                        className="equip_quant_but"
+                        onClick={() => handleQtyChange(item, 1)}
+                      >
+                        +
+                      </button>
                     </div>
                   </div>
 

@@ -100,7 +100,10 @@ li {
   transition: transform 0.3s ease-in-out;
   animation: gradient 10s ease infinite, boxShadowPulse 3s ease infinite;
 }
-
+.main_bar:hover {
+  transform: scale(1.1);
+  transition: 0.3s;
+}
 /* Эффект увеличения при наведении */
 .button_get_sch:hover {
   transform: scale(1.05);
@@ -146,6 +149,11 @@ li {
   height: 100px;
   z-index: 1;
   padding: 20px;
+}
+.main_cart_container {
+}
+.cart_logo {
+  width: 25px;
 }
 .round img {
   filter: invert(30%) sepia(100%) saturate(10000%) hue-rotate(0deg)
@@ -282,9 +290,13 @@ code {
   display: flex;
   align-items: center;
 }
+.cart_logo {
+  margin-bottom: -5px;
+  width: 20px;
+}
 .nav_bar ul {
   display: flex;
-
+  align-items: baseline;
   justify-content: space-evenly;
 }
 .more_info {
@@ -399,7 +411,8 @@ code {
 }
 .logo_photo {
   width: calc(var(--index) * 12);
-  margin-top: 3%;
+  margin-top: 2%;
+  margin-bottom: 1%;
   margin-left: 54px;
 }
 .title_main_page {

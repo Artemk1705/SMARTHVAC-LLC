@@ -51,14 +51,20 @@ function Footer() {
           <div className="sch_foot">GET SCHEDULE</div>
         </Link>
   */}
+        <Link to="/EquipmentPage">
+          <div className="about_foot">PRODUCTS</div>
+        </Link>
         <Link to="/about">
           <div className="about_foot">ABOUT</div>
         </Link>
         <Link to="/contact">
           <div className="contact_foot">CONTACT</div>
         </Link>
-        <Link to="/contact">
+        <Link to="/careers">
           <div className="contact_foot">CAREERS</div>
+        </Link>
+        <Link to="/Cart">
+          <div className="contact_foot">CART</div>
         </Link>
       </div>
     </div>

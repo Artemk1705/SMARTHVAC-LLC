@@ -6,6 +6,7 @@ import "../../assets/styles/careers.css";
 import Burger from "./burger";
 import logoComp from "../../assets/images/logomain.png";
 import logoTablet from "../../assets/images/SmartLogoTablet.png";
+import Cart from "../../assets/images/Cart.png";
 
 function Navbar() {
   const isDesktopOrLaptop = useMediaQuery({ minDeviceWidth: 450 });
@@ -54,21 +55,24 @@ function Navbar() {
             <li className="main_bar">
               <Link to="/MaintenancePlan">MAINTENANCE PLAN</Link>
             </li>
-            <li className="about_bar">
-              <Link to="/EquipmentPage">EQUIPMENT</Link>
+            <li className="main_bar">
+              <Link to="/EquipmentPage">PRODUCTS</Link>
             </li>
 
-            <li className="about_bar">
+            <li className="main_bar">
               <Link to="/about">ABOUT</Link>
             </li>
-            <li className="contact_bar">
+            <li className="main_bar">
               <Link to="/contact">CONTACT</Link>
             </li>
-            <li className="careers_bar">
+            <li className="main_bar">
               <Link to="/careers">CAREERS</Link>
             </li>
-            <li className="careers_bar">
-              <Link to="/Cart">CART</Link>
+            <li className="main_bar">
+              <Link to="/Cart">
+                <img src={Cart} className="cart_logo" alt="Cart" />
+                CART
+              </Link>
             </li>
           </ul>
         )}
